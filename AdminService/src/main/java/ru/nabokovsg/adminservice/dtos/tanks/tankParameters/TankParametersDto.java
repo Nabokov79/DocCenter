@@ -1,0 +1,22 @@
+package ru.nabokovsg.adminservice.dtos.tanks.tankParameters;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@Schema(description = "Данные параметраметров бака")
+public class TankParametersDto {
+
+    @Schema(description = "Индентификатор")
+    private Long id;
+    @Schema(description = "Тип бака, по назначению")
+    private String typeTank;
+    @Schema(description = "Положение бака")
+    private String orientation;
+    @Schema(description = "Объем бака")
+    private Integer volume;
+}
