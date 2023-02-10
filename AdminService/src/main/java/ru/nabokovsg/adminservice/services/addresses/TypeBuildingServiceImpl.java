@@ -51,7 +51,9 @@ public class TypeBuildingServiceImpl implements TypeBuildingService {
     @Override
     public void delete(Long buiId) {
         if (repository.existsById(buiId)) {
+            log.info("ID = {}",buiId);
             repository.deleteById(buiId);
+            return;
         }
         throw new NotFoundException(String.format("type building with id=%s not found for delete.", buiId));
     }
