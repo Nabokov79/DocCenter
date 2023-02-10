@@ -34,21 +34,19 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDto save(NewAddressDto addressDto) {
-        Address address = mapper.mapToNewAddress(addressDto);
-        address.setCity(getCityById(addressDto.getCityId()));
-        address.setTypeBuilding(getTypeBuildingById(addressDto.getTypeBuildingId()));
-        return mapper.mapToAddressDto(repository.save(address));
+        return mapper.mapToAddressDto(repository.save(setValue(mapper.mapToNewAddress(addressDto),
+                                                              addressDto.getCityId(),
+                                                              addressDto.getTypeBuildingId())));
     }
 
     @Override
     public AddressDto update(UpdateAddressDto addressDto) {
-        if (repository.existsById(addressDto.getId())) {
+        if (!repository.existsById(addressDto.getId())) {
             throw new NotFoundException(String.format("address with id=%s not found for update.", addressDto.getId()));
         }
-        Address address = mapper.mapToUpdateAddress(addressDto);
-        address.setCity(getCityById(addressDto.getCityId()));
-        address.setTypeBuilding(getTypeBuildingById(addressDto.getTypeBuildingId()));
-        return mapper.mapToAddressDto(repository.save(address));
+        return mapper.mapToAddressDto(repository.save(setValue(mapper.mapToUpdateAddress(addressDto),
+                addressDto.getCityId(),
+                addressDto.getTypeBuildingId())));
     }
 
     @Override
@@ -64,8 +62,7 @@ public class AddressServiceImpl implements AddressService {
         if(cityId == null && typeBuildingId == null) {
             return mapper.mapToAddressDto(repository.findAll(pageable).getContent());
         }
-        List<Address> addresses = repository.findAll(booleanBuilder, pageable).getContent();
-        return mapper.mapToAddressDto(addresses);
+        return mapper.mapToAddressDto(repository.findAll(booleanBuilder, pageable).getContent());
     }
 
     @Override
@@ -80,17 +77,13 @@ public class AddressServiceImpl implements AddressService {
                                                  address.getHouseNumber().toString());
     }
 
-    private City getCityById(Long citId) {
-        return cityRepository.findById(citId)
+    private Address setValue(Address address, Long citId, Long typId) {
+        address.setCity(cityRepository.findById(citId)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("city with id=%s not found for set", citId))
-                );
-    }
-
-    private TypeBuilding getTypeBuildingById(Long typId) {
-        return typeBuildingRepository.findById(typId)
+                        String.format("city with id=%s not found for set", citId))));
+        address.setTypeBuilding(typeBuildingRepository.findById(typId)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("type building with id=%s not found for delete.", typId))
-                );
+                        String.format("type building with id=%s not found for delete.", typId))));
+        return address;
     }
 }

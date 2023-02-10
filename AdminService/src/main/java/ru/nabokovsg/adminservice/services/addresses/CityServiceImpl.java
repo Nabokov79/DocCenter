@@ -34,8 +34,7 @@ public class CityServiceImpl implements CityService {
         if (!repository.existsById(cityDto.getId())) {
             throw new NotFoundException(String.format("city with id=%s not found for update.", cityDto.getId()));
         }
-        City city = mapper.mapToUpdateCity(cityDto);
-        return mapper.mapToCityDto(repository.save(city));
+        return mapper.mapToCityDto(repository.save(mapper.mapToUpdateCity(cityDto)));
     }
 
     @Override
