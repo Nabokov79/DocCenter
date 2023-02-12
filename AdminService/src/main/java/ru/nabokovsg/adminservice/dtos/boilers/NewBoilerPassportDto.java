@@ -2,8 +2,6 @@ package ru.nabokovsg.adminservice.dtos.boilers;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
@@ -20,18 +18,13 @@ public class NewBoilerPassportDto {
     @NotNull(message = "boiler id should not be blank")
     @Positive(message = "boiler id must be positive")
     private Long boilerId;
-    @ManyToOne(cascade = CascadeType.ALL)
     @Schema(description = "Индентификатор автора проекта")
-    @Positive(message = "author id can only be positive")
     private Long authorId;
     @Schema(description = "номер проекта")
-    @Min(value = 1, message = "less than one character entered")
     private String projectNumber;
     @Schema(description = "Индентификатор завода изготовителя фильтра")
-    @Positive(message = "manufacturer id can only be positive")
     private Long manufacturerId;
     @Schema(description = "Индентификатор монтажной организации")
-    @Positive(message = "mounting id can only be positive")
     private Long mountingId;
     @Schema(description = "Дата ввода в эксплуатацию")
     private LocalDate operation;
@@ -48,21 +41,4 @@ public class NewBoilerPassportDto {
     @Schema(description = "Список индентификаторов нормативных документов")
     @NotNull(message = "documentation should not be blank")
     private List<Long> documentationId;
-
-    @Override
-    public String toString() {
-        return "NewBoilerPassportDto{" +
-                "boilerId=" + boilerId +
-                ", authorId=" + authorId +
-                ", projectNumber='" + projectNumber + '\'' +
-                ", manufacturerId=" + manufacturerId +
-                ", mountingId=" + mountingId +
-                ", operation=" + operation +
-                ", startPassport=" + startPassport +
-                ", addressId=" + addressId +
-                ", surveysId=" + surveysId +
-                ", repairsId=" + repairsId +
-                ", documentationId=" + documentationId +
-                '}';
-    }
 }
