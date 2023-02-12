@@ -14,6 +14,8 @@ import ru.nabokovsg.adminservice.models.tanks.Orientation;
 import ru.nabokovsg.adminservice.models.tanks.TypeTank;
 import ru.nabokovsg.adminservice.services.tanks.TankPassportService;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -46,7 +48,7 @@ public class TankPassportController {
     @Operation(summary = "Получение полной информации паспорта")
     @GetMapping("/{pasId}")
     public ResponseEntity<TankPassportDto> get(
-            @PathVariable @Parameter(description = "Индентификатор паспорта") Long pasId) {
+            @PathVariable @NotNull @Positive @Parameter(description = "Индентификатор паспорта") Long pasId) {
         return ResponseEntity.ok().body(service.get(pasId));
     }
 
@@ -73,7 +75,8 @@ public class TankPassportController {
 
     @Operation(summary = "Удаление паспорта")
     @DeleteMapping("/{pasId}")
-    public ResponseEntity<String> delete(@PathVariable @Parameter(description = "Индентификатор паспорта") Long pasId) {
+    public ResponseEntity<String> delete(
+            @PathVariable @NotNull @Positive @Parameter(description = "Индентификатор паспорта") Long pasId) {
         service.delete(pasId);
         return ResponseEntity.ok("Паспорт удален");
     }
