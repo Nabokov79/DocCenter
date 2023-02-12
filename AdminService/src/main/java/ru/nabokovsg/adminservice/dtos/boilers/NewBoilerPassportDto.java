@@ -20,9 +20,9 @@ public class NewBoilerPassportDto {
     private Long boilerId;
     @Schema(description = "Индентификатор автора проекта")
     private Long authorId;
-    @Schema(description = "номер проекта")
+    @Schema(description = "Номер проекта")
     private String projectNumber;
-    @Schema(description = "Индентификатор завода изготовителя фильтра")
+    @Schema(description = "Индентификатор завода изготовителя котла")
     private Long manufacturerId;
     @Schema(description = "Индентификатор монтажной организации")
     private Long mountingId;
@@ -34,9 +34,9 @@ public class NewBoilerPassportDto {
     @NotNull(message = "address id should not be blank")
     @Positive(message = "address id can only be positive")
     private Long addressId;
-    @Schema(description = "Список индентификаторов обследований")
+    @Schema(description = "Список индентификаторов обследований котла")
     private List<Long> surveysId;
-    @Schema(description = "Список индентификаторов ремонтов бака")
+    @Schema(description = "Список индентификаторов ремонтов котла")
     private List<Long> repairsId;
     @Schema(description = "Список индентификаторов нормативных документов")
     @NotNull(message = "documentation should not be blank")

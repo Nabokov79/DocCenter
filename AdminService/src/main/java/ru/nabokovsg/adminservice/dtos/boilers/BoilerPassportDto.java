@@ -25,8 +25,8 @@ public class BoilerPassportDto {
     private Author author;
     @Schema(description = "Номер проекта")
     private String projectNumber;
-    @Schema(description = "Завод-изготовитель бака")
-    private Manufacturer manufacturerId;
+    @Schema(description = "Завод-изготовитель котла")
+    private Manufacturer manufacturer;
     @Schema(description = "Монтажная организация")
     private Mounting mounting;
     @Schema(description = "Дата ввода в эксплуатацию")
@@ -35,9 +35,9 @@ public class BoilerPassportDto {
     private LocalDate startPassport;
     @Schema(description = "Адрес местонахождения котельной")
     private Address address;
-    @Schema(description = "Список обследований")
+    @Schema(description = "Список обследований котла")
     private List<Survey> surveys;
-    @Schema(description = "Список ремонтов бака")
+    @Schema(description = "Список ремонтов котла")
     private List<Repair> repairs;
     @Schema(description = "Список нормативных документов")
     private List<Documentation> documentation;
