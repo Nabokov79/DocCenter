@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -23,4 +24,17 @@ public class Boiler {
     private String type;
     @Column(name = "model")
     private String model;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Boiler boiler = (Boiler) o;
+        return id == boiler.id && Objects.equals(number, boiler.number) && Objects.equals(type, boiler.type) && Objects.equals(model, boiler.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, number, type, model);
+    }
 }
