@@ -31,25 +31,25 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public CommonDto getObjects(RequestIds requestIds) {
         CommonDto commonDto = new CommonDto();
-        if (requestIds.getAuthorId() != null) {
+        if (requestIds.getAuthorId() != null && requestIds.getAuthorId() > 0) {
             commonDto.setAuthor(getAuthor(requestIds.getAuthorId()));
         }
-        if (requestIds.getManufacturerId() != null) {
+        if (requestIds.getManufacturerId() != null && requestIds.getManufacturerId() > 0) {
             commonDto.setManufacturer(getManufacturer(requestIds.getManufacturerId()));
         }
-        if (requestIds.getMountingId() != null) {
+        if (requestIds.getMountingId() != null && requestIds.getMountingId() > 0) {
             commonDto.setMounting(getMounting(requestIds.getMountingId()));
         }
-        if (requestIds.getAddressId() != null) {
+        if (requestIds.getAddressId() != null && requestIds.getAddressId() > 0) {
             commonDto.setAddress(getAddress(requestIds.getAddressId()));
         }
-        if (requestIds.getSurveysId() != null) {
+        if (requestIds.getSurveysId() != null && !requestIds.getSurveysId().isEmpty()) {
             commonDto.setSurveys(getSurveys(requestIds.getSurveysId()));
         }
-        if (requestIds.getRepairsId() != null) {
+        if (requestIds.getRepairsId() != null && !requestIds.getRepairsId().isEmpty()) {
             commonDto.setRepairs(getRepairs(requestIds.getRepairsId()));
         }
-        if (requestIds.getDocumentationId() != null) {
+        if (requestIds.getDocumentationId() != null && !requestIds.getDocumentationId().isEmpty()) {
             commonDto.setDocumentation(getDocumentations(requestIds.getDocumentationId()));
         }
         return commonDto;
@@ -76,7 +76,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
    private List<Survey> getSurveys(List<Long> ids) {
-        Map<Long, Survey> surveys = surveyRepository.findAllById(ids)
+        Map<Long, Survey> surveys = surveyRepository.findAllById(filterIds(ids))
                                                    .stream().collect(Collectors.toMap(Survey::getId, survey -> survey));
         if (surveys.size() != ids.size() || surveys.isEmpty()) {
             List<Long> idsDb = new ArrayList<>(surveys.keySet());
@@ -87,7 +87,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     private List<Repair> getRepairs(List<Long> ids) {
-        Map<Long, Repair> repairs = repairRepository.findAllById(ids)
+        Map<Long, Repair> repairs = repairRepository.findAllById(filterIds((ids)))
                                                    .stream().collect(Collectors.toMap(Repair::getId, repair -> repair));
         if (repairs.size() != ids.size() || repairs.isEmpty()) {
             List<Long> idsDb = new ArrayList<>(repairs.keySet());
@@ -99,7 +99,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     private List<Documentation> getDocumentations(List<Long> ids) {
-        Map<Long, Documentation> documentations = documentationRepository.findAllById(ids)
+        Map<Long, Documentation> documentations = documentationRepository.findAllById(filterIds(ids))
                                                   .stream().collect(Collectors.toMap(Documentation::getId, doc -> doc));
         if (documentations.size() != ids.size() || documentations.isEmpty()) {
             List<Long> idsDb = new ArrayList<>(documentations.keySet());
@@ -107,5 +107,9 @@ public class CommonServiceImpl implements CommonService {
             throw new NotFoundException(String.format("documentations with id= %s not found", ids));
         }
         return new ArrayList<>(documentations.values());
+    }
+
+    private List<Long> filterIds(List<Long> ids) {
+        return ids.stream().filter(s -> s > 0).toList();
     }
 }
