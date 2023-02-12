@@ -13,6 +13,8 @@ import ru.nabokovsg.adminservice.dtos.boilers.NewBoilerDto;
 import ru.nabokovsg.adminservice.dtos.boilers.UpdateBoilerDto;
 import ru.nabokovsg.adminservice.services.boilers.BoilerService;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -30,13 +32,15 @@ public class BoilerController {
 
     @Operation(summary = "Добавление данных котла")
     @PostMapping
-    public ResponseEntity<BoilerDto> save(@RequestBody @Parameter(description = "Котел") NewBoilerDto boilerDto) {
+    public ResponseEntity<BoilerDto> save(
+                                    @RequestBody @Validated @Parameter(description = "Котел") NewBoilerDto boilerDto) {
         return ResponseEntity.ok().body(service.save(boilerDto));
     }
 
     @Operation(summary = "Изменение данных котла")
     @PatchMapping
-    public ResponseEntity<BoilerDto> update(@RequestBody @Parameter(description = "Котел") UpdateBoilerDto boilerDto) {
+    public ResponseEntity<BoilerDto> update(
+                                @RequestBody @Validated @Parameter(description = "Котел") UpdateBoilerDto boilerDto) {
         return ResponseEntity.ok().body(service.update(boilerDto));
     }
 
@@ -48,7 +52,8 @@ public class BoilerController {
 
     @Operation(summary = "Удаление данных автора проекта")
     @DeleteMapping("/{boiId}")
-    public ResponseEntity<String> delete(@PathVariable @Parameter(description = "Индентификатор котла") Long boiId) {
+    public ResponseEntity<String> delete(
+            @PathVariable @NotNull @Positive @Parameter(description = "Индентификатор котла") Long boiId) {
         service.delete(boiId);
         return ResponseEntity.ok("Данные котла удалены");
     }

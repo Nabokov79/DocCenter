@@ -14,6 +14,8 @@ import ru.nabokovsg.adminservice.dtos.boilers.ShortBoilerPassportDto;
 import ru.nabokovsg.adminservice.dtos.boilers.UpdateBoilerPassportDto;
 import ru.nabokovsg.adminservice.services.boilers.BoilerPassportService;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -32,14 +34,14 @@ public class BoilerPassportController {
     @Operation(summary = "Добавление данных паспорта")
     @PostMapping
     public ResponseEntity<BoilerPassportDto> save(
-            @RequestBody @Parameter(description = "Паспорт") NewBoilerPassportDto passportDto) {
+            @RequestBody @Validated @Parameter(description = "Паспорт") NewBoilerPassportDto passportDto) {
         return ResponseEntity.ok().body(service.save(passportDto));
     }
 
     @Operation(summary = "Изменение данных паспорта")
     @PatchMapping
     public ResponseEntity<BoilerPassportDto> update(
-            @RequestBody @Parameter(description = "Паспорт") UpdateBoilerPassportDto passportDto) {
+            @RequestBody @Validated @Parameter(description = "Паспорт") UpdateBoilerPassportDto passportDto) {
         return ResponseEntity.ok().body(service.update(passportDto));
     }
 
@@ -62,7 +64,8 @@ public class BoilerPassportController {
 
     @Operation(summary = "Удаление паспорта")
     @DeleteMapping("/{pasId}")
-    public ResponseEntity<String> delete(@PathVariable @Parameter(description = "Индентификатор паспорта") Long pasId) {
+    public ResponseEntity<String> delete(
+            @PathVariable @NotNull @Positive @Parameter(description = "Индентификатор паспорта") Long pasId) {
         service.delete(pasId);
         return ResponseEntity.ok("Паспорт удален");
     }
