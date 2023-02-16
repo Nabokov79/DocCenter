@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nabokovsg.adminservice.models.addresses.City;
+import ru.nabokovsg.adminservice.models.City;
 import ru.nabokovsg.adminservice.models.addresses.TypeBuilding;
 
 @Setter
