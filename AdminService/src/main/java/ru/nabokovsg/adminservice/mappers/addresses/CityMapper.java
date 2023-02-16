@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import ru.nabokovsg.adminservice.dtos.addresses.citys.CityDto;
 import ru.nabokovsg.adminservice.dtos.addresses.citys.NewCityDto;
 import ru.nabokovsg.adminservice.dtos.addresses.citys.UpdateCityDto;
-import ru.nabokovsg.adminservice.models.addresses.City;
+import ru.nabokovsg.adminservice.models.City;
 
 import java.util.List;
 
