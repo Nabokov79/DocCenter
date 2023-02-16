@@ -1,4 +1,4 @@
-package ru.nabokovsg.adminservice.models.addresses;
+package ru.nabokovsg.adminservice.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
