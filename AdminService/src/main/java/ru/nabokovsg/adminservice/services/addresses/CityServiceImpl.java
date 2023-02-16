@@ -9,7 +9,7 @@ import ru.nabokovsg.adminservice.dtos.addresses.citys.UpdateCityDto;
 import ru.nabokovsg.adminservice.exceptions.BadRequestException;
 import ru.nabokovsg.adminservice.exceptions.NotFoundException;
 import ru.nabokovsg.adminservice.mappers.addresses.CityMapper;
-import ru.nabokovsg.adminservice.models.addresses.City;
+import ru.nabokovsg.adminservice.models.City;
 import ru.nabokovsg.adminservice.repositoryes.addresses.CityRepository;
 import java.util.List;
 
