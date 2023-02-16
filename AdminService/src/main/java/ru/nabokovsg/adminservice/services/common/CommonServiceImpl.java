@@ -3,13 +3,23 @@ package ru.nabokovsg.adminservice.services.common;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.adminservice.dtos.CommonDto;
+import ru.nabokovsg.adminservice.dtos.DivisionIds;
 import ru.nabokovsg.adminservice.dtos.RequestIds;
+import ru.nabokovsg.adminservice.dtos.users.MeasuringToolIds;
 import ru.nabokovsg.adminservice.exceptions.NotFoundException;
 import ru.nabokovsg.adminservice.models.*;
 import ru.nabokovsg.adminservice.models.addresses.Address;
 import ru.nabokovsg.adminservice.models.documentation.Documentation;
+import ru.nabokovsg.adminservice.models.users.ControlType;
+import ru.nabokovsg.adminservice.models.users.MeasuringTool;
+import ru.nabokovsg.adminservice.models.users.Owner;
+import ru.nabokovsg.adminservice.models.users.User;
 import ru.nabokovsg.adminservice.repositoryes.*;
 import ru.nabokovsg.adminservice.repositoryes.addresses.AddressRepository;
+import ru.nabokovsg.adminservice.repositoryes.addresses.CityRepository;
+import ru.nabokovsg.adminservice.repositoryes.users.ControlTypeRepository;
+import ru.nabokovsg.adminservice.repositoryes.users.OwnerRepository;
+import ru.nabokovsg.adminservice.repositoryes.users.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +37,12 @@ public class CommonServiceImpl implements CommonService {
     private final SurveyRepository surveyRepository;
     private final RepairRepository repairRepository;
     private final DocumentationRepository documentationRepository;
+    private final ControlTypeRepository controlTypeRepository;
+    private final OrganizationRepository organizationRepository;
+    private final UserRepository userRepository;
+    private final OwnerRepository ownerRepository;
+    private final CityRepository cityRepository;
+    private final LicenseRepository licenseRepository;
 
     @Override
     public CommonDto getObjects(RequestIds requestIds) {
@@ -53,6 +69,53 @@ public class CommonServiceImpl implements CommonService {
             commonDto.setDocumentation(getDocumentations(requestIds.getDocumentationId()));
         }
         return commonDto;
+    }
+
+    @Override
+    public MeasuringTool setMeasuringToolValue(MeasuringTool measuringTool, MeasuringToolIds ids) {
+        measuringTool.setType(getControlType(ids.getTypeId()));
+        measuringTool.setOrganization(getOrganization(ids.getOrganizationId()));
+        measuringTool.setUser(getUser(ids.getUserId()));
+        measuringTool.setManufacturer(getManufacturer(ids.getManufacturerId()));
+        measuringTool.setOwner(getOwner(ids.getOwnerId()));
+        return measuringTool;
+    }
+
+    @Override
+    public Division setDivisionValue(Division division, DivisionIds ids) {
+        division.setCity(getCity(ids.getCityId()));
+        division.setOrganization(getOrganization(ids.getOrganizationId()));
+        division.setLicense(getLicense(ids.getLicenseId()));
+        return division;
+    }
+
+    private City getCity(Long citId) {
+        return cityRepository.findById(citId)
+                .orElseThrow(() -> new NotFoundException(String.format("city with id=%s not found", citId)));
+    }
+
+    private License getLicense(Long licId) {
+        return licenseRepository.findById(licId)
+                .orElseThrow(() -> new NotFoundException(String.format("license with id=%s not found", licId)));
+    }
+
+    private ControlType getControlType(Long typId) {
+        return controlTypeRepository.findById(typId)
+                .orElseThrow(() -> new NotFoundException(String.format("control type with id=%s not found", typId)));
+    }
+
+    private Organization getOrganization(Long orgId) {
+        return organizationRepository.findById(orgId)
+                .orElseThrow(() -> new NotFoundException(String.format("organization with id=%s not found", orgId)));
+    }
+
+    private User getUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(String.format("user with id=%s not found", userId)));
+    }
+    private Owner getOwner(Long ownerId) {
+       return ownerRepository.findById(ownerId)
+                .orElseThrow(() -> new NotFoundException(String.format("owner with id=%s not found", ownerId)));
     }
 
     private Author getAuthor(Long id) {
