@@ -19,6 +19,7 @@
 
     <modules>
         <module>AdminService</module>
+        <module>ReportService</module>
     </modules>
 
     <properties>
