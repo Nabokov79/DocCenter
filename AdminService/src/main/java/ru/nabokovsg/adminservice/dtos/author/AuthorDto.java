@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-@Schema(description = "Данные автора проекта объекта обследования")
+@Schema(description = "Данные автора проекта")
 public class AuthorDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
-    @Schema(description = "Автор проета")
+    @Schema(description = "Автор проекта")
     private String name;
 }
