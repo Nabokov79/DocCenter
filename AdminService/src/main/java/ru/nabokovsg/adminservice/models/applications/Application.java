@@ -1,7 +1,7 @@
 package ru.nabokovsg.adminservice.models.applications;
 
 import lombok.*;
-import ru.nabokovsg.adminservice.Type;
+import ru.nabokovsg.adminservice.models.Type;
 import ru.nabokovsg.adminservice.models.addresses.Address;
 import ru.nabokovsg.adminservice.models.tanks.Orientation;
 import ru.nabokovsg.adminservice.models.users.User;

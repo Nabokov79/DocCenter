@@ -2,7 +2,7 @@ package ru.nabokovsg.adminservice.services.common;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.adminservice.Type;
+import ru.nabokovsg.adminservice.models.Type;
 import ru.nabokovsg.adminservice.dtos.CommonDto;
 import ru.nabokovsg.adminservice.dtos.DivisionIds;
 import ru.nabokovsg.adminservice.dtos.RequestIds;

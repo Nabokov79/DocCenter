@@ -1,7 +1,7 @@
 package ru.nabokovsg.adminservice.models.pipelines;
 
 import lombok.*;
-import ru.nabokovsg.adminservice.Type;
+import ru.nabokovsg.adminservice.models.Type;
 import ru.nabokovsg.adminservice.models.*;
 import ru.nabokovsg.adminservice.models.addresses.Address;
 import ru.nabokovsg.adminservice.models.documentation.Documentation;

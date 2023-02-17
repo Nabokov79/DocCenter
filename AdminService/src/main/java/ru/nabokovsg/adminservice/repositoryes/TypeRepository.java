@@ -1,7 +1,7 @@
 package ru.nabokovsg.adminservice.repositoryes;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.nabokovsg.adminservice.Type;
+import ru.nabokovsg.adminservice.models.Type;
 
 public interface TypeRepository extends JpaRepository<Type, Long> {
 
