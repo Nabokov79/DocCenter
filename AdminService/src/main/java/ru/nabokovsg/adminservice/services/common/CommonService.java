@@ -1,5 +1,6 @@
 package ru.nabokovsg.adminservice.services.common;
 
+import ru.nabokovsg.adminservice.models.Type;
 import ru.nabokovsg.adminservice.dtos.CommonDto;
 import ru.nabokovsg.adminservice.dtos.DivisionIds;
 import ru.nabokovsg.adminservice.dtos.RequestIds;
@@ -14,4 +15,6 @@ public interface CommonService {
     MeasuringTool setMeasuringToolValue(MeasuringTool measuringTool, MeasuringToolIds ids);
 
     Division setDivisionValue(Division division, DivisionIds ids);
+
+    Type getType(Long typId);
 }
