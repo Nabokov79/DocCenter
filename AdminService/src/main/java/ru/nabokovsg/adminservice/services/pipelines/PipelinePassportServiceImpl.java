@@ -32,7 +32,7 @@ public class PipelinePassportServiceImpl implements PipelinePassportService {
         RequestIds requestIds = mapper.mapToNewRequestIdsDto(passportDto);
         PipelinePassport passport = service.setValuePipeline(
                                                          mapper.mapToNewPipelinePassport(passportDto), ids, requestIds);
-        if (repository.existsByPurposePipelineAndAddressAndLocation(passport.getPurposePipeline(),
+        if (repository.existsByTypeAndAddressAndLocation(passport.getType(),
                                                                     passport.getAddress(),
                                                                     passport.getLocation())) {
             throw new NotFoundException(String.format("pipeline passport =%s found", passport));
@@ -60,10 +60,10 @@ public class PipelinePassportServiceImpl implements PipelinePassportService {
     }
 
     @Override
-    public List<ShortPipelinePassportDto> getAll(Long purposePipelineId, Long addressId, String location) {
+    public List<ShortPipelinePassportDto> getAll(Long typeId, Long addressId, String location) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        if (purposePipelineId != null) {
-            booleanBuilder.and(QPipelinePassport.pipelinePassport.purposePipeline.id.eq(purposePipelineId));
+        if (typeId != null) {
+            booleanBuilder.and(QPipelinePassport.pipelinePassport.type.id.eq(typeId));
         }
         if (location != null) {
             booleanBuilder.and(QPipelinePassport.pipelinePassport.location.eq(location));

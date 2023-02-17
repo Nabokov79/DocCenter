@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -21,10 +20,10 @@ public class UpdateOilPipelinePassportDto {
     @NotNull(message = "oil pipeline passport id should not be blank")
     @Positive(message = "oil pipeline passport id must be positive")
     private Long id;
-    @Schema(description = "Индентификатор названия назначения трубопровода")
-    @NotNull(message = "purpose pipeline id should not be blank")
-    @Positive(message = "purpose pipeline id can only be positive")
-    private Long purposePipelineId;
+    @Schema(description = "Индентификатор назначения трубопровода")
+    @NotNull(message = "type id should not be blank")
+    @Positive(message = "type id author must be positive")
+    private Long typeId;
     @Schema(description = "Индентификатор атора проекта")
     @Positive(message = "author id can only be positive")
     private Long authorId;

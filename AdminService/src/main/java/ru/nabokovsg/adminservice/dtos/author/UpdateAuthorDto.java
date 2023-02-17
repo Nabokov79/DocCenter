@@ -19,7 +19,7 @@ public class UpdateAuthorDto {
     @NotNull(message = "id author should not be blank")
     @Positive(message = "id author must be positive")
     private Long id;
-    @Schema(description = "Автор проета")
+    @Schema(description = "Автор проекта")
     @NotBlank(message = "name author should not be blank")
     private String name;
 }

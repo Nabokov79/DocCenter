@@ -1,6 +1,7 @@
 package ru.nabokovsg.adminservice.models.pipelines;
 
 import lombok.*;
+import ru.nabokovsg.adminservice.Type;
 import ru.nabokovsg.adminservice.models.*;
 import ru.nabokovsg.adminservice.models.addresses.Address;
 import ru.nabokovsg.adminservice.models.documentation.Documentation;
@@ -21,8 +22,8 @@ public class PipelinePassport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "purpose_pipeline_id", referencedColumnName = "id")
-    private PurposePipeline purposePipeline;
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private Type type;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
@@ -78,7 +79,7 @@ public class PipelinePassport {
     public String toString() {
         return "PipelinePassport{" +
                 "id=" + id +
-                ", purposePipeline=" + purposePipeline +
+                ", type=" + type +
                 ", author=" + author +
                 ", projectNumber='" + projectNumber + '\'' +
                 ", manufacturer=" + manufacturer +

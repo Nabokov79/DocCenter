@@ -15,7 +15,7 @@ public interface PipelinePassportService {
 
     PipelinePassportDto get(Long pasId);
 
-   List<ShortPipelinePassportDto> getAll(Long purposePipelineId,Long addressId, String location);
+   List<ShortPipelinePassportDto> getAll(Long typeId,Long addressId, String location);
 
     void delete(Long pasId);
 }

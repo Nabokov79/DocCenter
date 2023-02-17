@@ -19,9 +19,10 @@ public class UpdateTankParametersDto {
     @NotNull(message = "id type tank should not be blank")
     @Positive(message = "id type tank must be positive")
     private Long id;
-    @Schema(description = "Тип бака, по назначению")
-    @NotBlank(message = "type tank should not be blank")
-    private String typeTank;
+    @Schema(description = "Индентификатор типа бака")
+    @NotNull(message = "type id should not be blank")
+    @Positive(message = "type id author must be positive")
+    private Long typeId;
     @Schema(description = "Положение бака")
     @NotBlank(message = "tank orientation should not be blank")
     private String orientation;

@@ -3,16 +3,10 @@ package ru.nabokovsg.adminservice.services.tanks;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import ru.nabokovsg.adminservice.dtos.CommonDto;
 import ru.nabokovsg.adminservice.dtos.RequestIds;
-import ru.nabokovsg.adminservice.dtos.boilers.BoilerPassportDto;
 import ru.nabokovsg.adminservice.dtos.tanks.TankIdsDto;
 import ru.nabokovsg.adminservice.dtos.tanks.passport.*;
 import ru.nabokovsg.adminservice.exceptions.NotFoundException;
@@ -73,8 +67,8 @@ public class TankPassportServiceImpl implements TankPassportService {
     @Override
     public List<ShortTankPassportDto> getAll(TankSearchParam param) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        if (param.getTypeTank() != null) {
-            booleanBuilder.and(QTankPassport.tankPassport.tankParameters.typeTank.eq(param.getTypeTank()));
+        if (param.getTypeId() != null) {
+            booleanBuilder.and(QTankPassport.tankPassport.tankParameters.type.id.eq(param.getTypeId()));
         }
         if (param.getOrientation() != null) {
             booleanBuilder.and(QTankPassport.tankPassport.tankParameters.orientation.eq(param.getOrientation()));

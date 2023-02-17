@@ -16,9 +16,9 @@ import java.util.List;
 public class NewPipelinePassportDto {
 
     @Schema(description = "Индентификатор названия назначения трубопровода")
-    @NotNull(message = "purpose pipeline id should not be blank")
-    @Positive(message = "purpose pipeline id can only be positive")
-    private Long purposePipelineId;
+    @NotNull(message = "type pipeline id should not be blank")
+    @Positive(message = "type pipeline id can only be positive")
+    private Long typeId;
     @Schema(description = "Индентификатор атора проекта")
     @Positive(message = "author id can only be positive")
     private Long authorId;

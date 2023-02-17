@@ -2,15 +2,14 @@ package ru.nabokovsg.adminservice.services.pipelines;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.nabokovsg.adminservice.Type;
 import ru.nabokovsg.adminservice.dtos.pipelines.standardNormPipe.NewStandardNormPipeDto;
 import ru.nabokovsg.adminservice.dtos.pipelines.standardNormPipe.StandardNormPipeDto;
 import ru.nabokovsg.adminservice.dtos.pipelines.standardNormPipe.UpdateStandardNormPipeDto;
 import ru.nabokovsg.adminservice.exceptions.BadRequestException;
 import ru.nabokovsg.adminservice.exceptions.NotFoundException;
 import ru.nabokovsg.adminservice.mappers.pipelines.StandardNormPipeMapper;
-import ru.nabokovsg.adminservice.models.pipelines.PurposePipeline;
 import ru.nabokovsg.adminservice.models.pipelines.StandardNormPipe;
-import ru.nabokovsg.adminservice.repositoryes.pipelines.PurposePipelineRepository;
 import ru.nabokovsg.adminservice.repositoryes.pipelines.StandardNormPipeRepository;
 
 import java.util.List;
@@ -20,16 +19,15 @@ import java.util.List;
 public class StandardNormPipeServiceImpl implements StandardNormPipeService {
 
     private final StandardNormPipeRepository repository;
-    private final PurposePipelineRepository purposePipelineRepository;
     private final PipeLineService service;
     private final StandardNormPipeMapper mapper;
 
     @Override
     public List<StandardNormPipeDto> save(List<NewStandardNormPipeDto> pipesDto) {
-        List<Long> purposeIds = pipesDto.stream().map(NewStandardNormPipeDto::getPurposePipelineId).distinct().toList();
-        List<StandardNormPipe> standardPipes = service.setPurposePipeline(mapper.mapToNewStandardNormPipe(pipesDto), purposeIds);
-        PurposePipeline purposePipelines = standardPipes.stream().map(StandardNormPipe::getPurpose).toList().get(0);
-        List<StandardNormPipe> standardPipesDb = repository.findAllByPurpose(purposePipelines);
+        List<Long> typeIds = pipesDto.stream().map(NewStandardNormPipeDto::getTypeId).distinct().toList();
+        List<StandardNormPipe> standardPipes = service.setTypePipeline(mapper.mapToNewStandardNormPipe(pipesDto), typeIds);
+        Type typePipelines = standardPipes.stream().map(StandardNormPipe::getType).toList().get(0);
+        List<StandardNormPipe> standardPipesDb = repository.findAllByTypeId(typePipelines.getId());
         standardPipes = standardPipes.stream().filter(p -> !standardPipesDb.contains(p)).toList();
         if (standardPipes.isEmpty()) {
             throw new BadRequestException(String.format("standard and norm pipe found %s.", pipesDto));
@@ -47,23 +45,20 @@ public class StandardNormPipeServiceImpl implements StandardNormPipeService {
             throw new NotFoundException(
                                  String.format("standard and norm pipe not found for update %s.", updateStandardPipes));
         }
-        List<Long> purposeIds = pipesDto.stream().map(UpdateStandardNormPipeDto::getPurposePipelineId).distinct().toList();
-        if (purposeIds.size() != 1) {
+        List<Long> typeIds = pipesDto.stream().map(UpdateStandardNormPipeDto::getTypeId).distinct().toList();
+        if (typeIds.size() != 1) {
             throw new BadRequestException(
-                    String.format("number of pipeline objects is not equal to 1 quantity=%s, ids=%s", purposeIds.size()
-                                                                                                    ,purposeIds));
+                    String.format("number of pipeline objects is not equal to 1 quantity=%s, ids=%s", typeIds.size()
+                                                                                                    , typeIds));
         }
         return mapper.mapToStandardNormPipesDto(
-                repository.saveAll(service.setPurposePipeline(updateStandardPipes, purposeIds))
+                repository.saveAll(service.setTypePipeline(updateStandardPipes, typeIds))
         );
     }
 
     @Override
-    public List<StandardNormPipeDto> getAll(Long purposePipelineId) {
-        PurposePipeline purposePipeline = purposePipelineRepository.findById(purposePipelineId)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("purpose pipeline with id=%s not found", purposePipelineId)));
-        return mapper.mapToStandardNormPipesDto(repository.findAllByPurpose(purposePipeline));
+    public List<StandardNormPipeDto> getAll(Long typeId) {
+        return mapper.mapToStandardNormPipesDto(repository.findAllByTypeId(typeId));
     }
 
     @Override

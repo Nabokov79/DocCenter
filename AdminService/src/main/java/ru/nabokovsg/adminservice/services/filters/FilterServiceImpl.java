@@ -9,8 +9,8 @@ import ru.nabokovsg.adminservice.dtos.filters.FilterDto;
 import ru.nabokovsg.adminservice.dtos.filters.NewFilterDto;
 import ru.nabokovsg.adminservice.dtos.filters.UpdateFilterDto;
 import ru.nabokovsg.adminservice.mappers.filters.FilterMapper;
-import ru.nabokovsg.adminservice.models.filters.Type;
 import ru.nabokovsg.adminservice.repositoryes.filters.FilterRepository;
+import ru.nabokovsg.adminservice.services.common.CommonService;
 
 import java.util.List;
 
@@ -20,14 +20,14 @@ public class FilterServiceImpl implements FilterService {
 
     private final FilterRepository repository;
     private final FilterMapper mapper;
-
+    private final CommonService commonService;
     @Override
     public FilterDto save(NewFilterDto filterDto) {
         if (repository.existsByNameAndModel(filterDto.getName(), filterDto.getModel())) {
             throw new BadRequestException(String.format("filter=%s found", filterDto));
         }
         Filter filter = setLetterCase(mapper.mapToNewFilter(filterDto));
-        filter.setType(getType(filterDto.getType()));
+        filter.setType(commonService.getType(filterDto.getTypeId()));
         return mapper.mapToFilterDto(repository.save(filter));
     }
 
@@ -37,7 +37,7 @@ public class FilterServiceImpl implements FilterService {
             throw new NotFoundException(String.format("filter with id=%s not found for update", filterDto.getId()));
         }
         Filter filter = setLetterCase(mapper.mapToUpdateFilter(filterDto));
-        filter.setType(getType(filterDto.getType()));
+        filter.setType(commonService.getType(filterDto.getTypeId()));
         return mapper.mapToFilterDto(repository.save(filter));
     }
 
@@ -62,11 +62,5 @@ public class FilterServiceImpl implements FilterService {
             filter.setModel(filter.getModel().toUpperCase());
         }
         return filter;
-    }
-
-    private Type getType(String type) {
-        return Type.from(type)
-                .orElseThrow(() -> new BadRequestException("Unknown type object: " + type));
-
     }
 }

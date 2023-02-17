@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.nabokovsg.adminservice.Type;
+
 import javax.persistence.*;
 
 @Setter
@@ -17,9 +19,9 @@ public class TankParameters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "type_tank")
-    @Enumerated(EnumType.STRING)
-    private TypeTank typeTank;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private Type type;
     @Column(name = "orientation")
     @Enumerated(EnumType.STRING)
     private Orientation orientation;

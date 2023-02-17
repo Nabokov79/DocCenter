@@ -9,8 +9,8 @@ import ru.nabokovsg.adminservice.exceptions.BadRequestException;
 import ru.nabokovsg.adminservice.mappers.tanks.TankParametersMapper;
 import ru.nabokovsg.adminservice.models.tanks.Orientation;
 import ru.nabokovsg.adminservice.models.tanks.TankParameters;
-import ru.nabokovsg.adminservice.models.tanks.TypeTank;
 import ru.nabokovsg.adminservice.repositoryes.tanks.TankParametersRepository;
+import ru.nabokovsg.adminservice.services.common.CommonService;
 
 import java.util.List;
 
@@ -20,12 +20,13 @@ public class TankParametersServiceImpl implements TankParametersService {
 
     private final TankParametersRepository repository;
     private final TankParametersMapper mapper;
+    private final CommonService commonService;
 
     @Override
     public TankParametersDto save(NewTankParametersDto tankParametersDto) {
         return mapper.mapToTankParametersDto(
                 repository.save(setValues(mapper.mapToNewTankParameters(tankParametersDto),
-                                          tankParametersDto.getTypeTank(),
+                                          tankParametersDto.getTypeId(),
                                           tankParametersDto.getOrientation()))
         );
     }
@@ -38,7 +39,7 @@ public class TankParametersServiceImpl implements TankParametersService {
         }
         return mapper.mapToTankParametersDto(
                 repository.save(setValues(mapper.mapToUpdateTankParameters(tankParametersDto),
-                                         tankParametersDto.getTypeTank(),
+                                         tankParametersDto.getTypeId(),
                                          tankParametersDto.getOrientation())));
     }
 
@@ -55,9 +56,8 @@ public class TankParametersServiceImpl implements TankParametersService {
         throw new BadRequestException(String.format("tank parameters with id=%s not found for update", parId));
     }
 
-    private TankParameters setValues(TankParameters parameters, String typeTank, String orientation) {
-        parameters.setTypeTank(TypeTank.from(typeTank)
-                .orElseThrow(() -> new BadRequestException("Unknown type object: " + typeTank)));
+    private TankParameters setValues(TankParameters parameters, Long typeId, String orientation) {
+        parameters.setType(commonService.getType(typeId));
         parameters.setOrientation(Orientation.from(orientation)
                 .orElseThrow(() -> new BadRequestException("Unknown type object: " + orientation)));
         return parameters;

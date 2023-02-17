@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.nabokovsg.adminservice.Type;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -20,8 +21,8 @@ public class StandardNormPipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "purpose_pipeline_id", referencedColumnName = "id")
-    private PurposePipeline purpose;
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private Type type;
     @Column(name = "diameter")
     private Integer diameter;
     @Column(name = "thickness")
@@ -33,7 +34,7 @@ public class StandardNormPipe {
     public String toString() {
         return "StandardNormPipe{" +
                 "id=" + id +
-                ", purpose=" + purpose +
+                ", type=" + type +
                 ", diameter=" + diameter +
                 ", thickness=" + thickness +
                 ", min=" + min +
@@ -45,11 +46,11 @@ public class StandardNormPipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StandardNormPipe that = (StandardNormPipe) o;
-        return id == that.id && purpose == that.purpose && Objects.equals(diameter, that.diameter) && Objects.equals(thickness, that.thickness) && Objects.equals(min, that.min);
+        return id == that.id && Objects.equals(type, that.type) && Objects.equals(diameter, that.diameter) && Objects.equals(thickness, that.thickness) && Objects.equals(min, that.min);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, purpose, diameter, thickness, min);
+        return Objects.hash(id, type, diameter, thickness, min);
     }
 }

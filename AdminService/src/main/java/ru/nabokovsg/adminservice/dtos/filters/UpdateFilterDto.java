@@ -19,9 +19,10 @@ public class UpdateFilterDto {
     @NotNull(message = "filter id should not be blank")
     @Positive(message = "filter id must be positive")
     private Long id;
-    @Schema(description = "Тип фильтра")
-    @NotBlank(message = "type filter should not be blank")
-    private String type;
+    @Schema(description = "Индентификатор типа фильтра")
+    @NotNull(message = "type id should not be blank")
+    @Positive(message = "type id must be positive")
+    private Long typeId;
     @Schema(description = "Назначение фильтра")
     @NotBlank(message = "name filter should not be blank")
     private String name;

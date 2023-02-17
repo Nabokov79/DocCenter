@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Schema(description = "Данные нового автора проекта объекта обследования")
 public class NewAuthorDto {
 
-    @Schema(description = "Автор проета")
+    @Schema(description = "Автор проекта")
     @NotBlank(message = "name author should not be blank")
     private String name;
 }

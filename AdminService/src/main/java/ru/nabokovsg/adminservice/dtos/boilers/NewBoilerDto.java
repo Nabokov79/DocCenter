@@ -13,13 +13,10 @@ import javax.validation.constraints.Positive;
 @Schema(description = "Данные нового котла")
 public class NewBoilerDto {
 
-    @Schema(description = "Номер котла")
-    @NotNull(message = "number should not be blank")
-    @Positive(message = "number must be positive")
-    private Integer number;
-    @Schema(description = "Тип котла")
-    @NotBlank(message = "type boiler should not be blank")
-    private String type;
+    @Schema(description = "Индентификатор типа котла")
+    @NotNull(message = "type id should not be blank")
+    @Positive(message = "type id author must be positive")
+    private Long typeId;
     @Schema(description = "Модель котла")
     @NotBlank(message = "model boiler should not be blank")
     private String model;

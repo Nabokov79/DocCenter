@@ -12,7 +12,6 @@ import ru.nabokovsg.adminservice.exceptions.NotFoundException;
 import ru.nabokovsg.adminservice.mappers.pipelines.OilPipelinePassportMapper;
 import ru.nabokovsg.adminservice.models.pipelines.OilPipelinePassport;
 import ru.nabokovsg.adminservice.repositoryes.pipelines.OilPipelinePassportRepository;
-
 import java.util.List;
 
 @Service
@@ -30,7 +29,7 @@ public class OilPipelinePassportServiceImpl implements OilPipelinePassportServic
         OilPipelinePassport passport = service.setValueOilPipeline(
                 mapper.mapToNewOilPipelinePassport(passportDto), ids, requestIds);
         if (repository.existsByAddress(passport.getAddress())) {
-            throw new NotFoundException(String.format("pipeline passport =%s found", passport));
+            throw new NotFoundException(String.format("pipeline passport=%s found", passport));
         }
         return mapper.mapToOilPipelinePassportDto(repository.save(passport));
     }

@@ -18,10 +18,10 @@ import java.util.List;
 @Schema(description = "Данные нового паспорта мазутопровода")
 public class NewOilPipelinePassportDto {
 
-    @Schema(description = "Индентификатор названия назначения трубопровода")
-    @NotNull(message = "purpose pipeline id should not be blank")
-    @Positive(message = "purpose pipeline id can only be positive")
-    private Long purposePipelineId;
+    @Schema(description = "Индентификатор назначения трубопровода")
+    @NotNull(message = "type id should not be blank")
+    @Positive(message = "type id author must be positive")
+    private Long typeId;
     @Schema(description = "Индентификатор атора проекта")
     @Positive(message = "author id can only be positive")
     private Long authorId;

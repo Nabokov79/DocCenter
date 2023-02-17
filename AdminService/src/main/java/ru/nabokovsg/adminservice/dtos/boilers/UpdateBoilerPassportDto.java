@@ -19,7 +19,11 @@ public class UpdateBoilerPassportDto {
     @NotNull(message = "id tank passport should not be blank")
     @Positive(message = "id tank passport must be positive")
     private Long id;
-    @Schema(description = "Индентификатор котла")
+    @Schema(description = "Номер котла")
+    @NotNull(message = "number should not be blank")
+    @Positive(message = "number must be positive")
+    private Integer number;
+    @Schema(description = "Индентификатор типа котла")
     @NotNull(message = "boiler id should not be blank")
     @Positive(message = "boiler id must be positive")
     private Long boilerId;

@@ -3,6 +3,7 @@ package ru.nabokovsg.adminservice.services.pipelines;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.nabokovsg.adminservice.Type;
 import ru.nabokovsg.adminservice.dtos.CommonDto;
 import ru.nabokovsg.adminservice.dtos.RequestIds;
 import ru.nabokovsg.adminservice.dtos.pipelines.PipelineIdsDto;
@@ -11,9 +12,7 @@ import ru.nabokovsg.adminservice.exceptions.NotFoundException;
 import ru.nabokovsg.adminservice.mappers.pipelines.PipelineMapper;
 import ru.nabokovsg.adminservice.models.pipelines.OilPipelinePassport;
 import ru.nabokovsg.adminservice.models.pipelines.PipelinePassport;
-import ru.nabokovsg.adminservice.models.pipelines.PurposePipeline;
 import ru.nabokovsg.adminservice.models.pipelines.StandardNormPipe;
-import ru.nabokovsg.adminservice.repositoryes.pipelines.PurposePipelineRepository;
 import ru.nabokovsg.adminservice.repositoryes.pipelines.StandardNormPipeRepository;
 import ru.nabokovsg.adminservice.services.common.CommonService;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PipeLineServiceImpl implements PipeLineService {
 
-    private final PurposePipelineRepository purposePipelineRepository;
     private final StandardNormPipeRepository standardNormPipeRepository;
     private final CommonService commonService;
     private final PipelineMapper mapper;
@@ -34,7 +32,7 @@ public class PipeLineServiceImpl implements PipeLineService {
     public PipelinePassport setValuePipeline(PipelinePassport passportDto, PipelineIdsDto ids, RequestIds requestIds) {
         CommonDto commonDto = commonService.getObjects(requestIds);
         PipelinePassport passport = mapper.mapToPipelinePassport(passportDto, commonDto);
-        passport.setPurposePipeline(getPurposePipeline(ids.getPurposePipelineId()));
+        passport.setType(commonService.getType(ids.getTypeId()));
         passport.setStandardNormPipes(getStandardNormPipe(ids.getStandardNormPipesId()));
         return passport;
     }
@@ -43,28 +41,22 @@ public class PipeLineServiceImpl implements PipeLineService {
     public OilPipelinePassport setValueOilPipeline(OilPipelinePassport passportDto, PipelineIdsDto ids, RequestIds requestIds) {
         CommonDto commonDto = commonService.getObjects(requestIds);
         OilPipelinePassport passport = mapper.mapToOilPipelinePassport(passportDto, commonDto);
-        passport.setPurposePipeline(getPurposePipeline(ids.getPurposePipelineId()));
+        passport.setType(commonService.getType(ids.getTypeId()));
         passport.setStandardNormPipes(getStandardNormPipe(ids.getStandardNormPipesId()));
         return passport;
     }
 
     @Override
-    public List<StandardNormPipe> setPurposePipeline(List<StandardNormPipe> pipes, List<Long> purposeIds) {
-        if (purposeIds.size() != 1) {
+    public List<StandardNormPipe> setTypePipeline(List<StandardNormPipe> pipes, List<Long> ids) {
+        if (ids.size() != 1) {
             throw new BadRequestException(
-                    String.format("number of pipeline objects is not equal to 1 quantity=%s, ids=%s", purposeIds.size()
-                            ,purposeIds));
+                    String.format("number of pipeline objects is not equal to 1 quantity=%s, ids=%s", ids.size(), ids));
         }
-        PurposePipeline purposePipeline = getPurposePipeline(purposeIds.get(0));
+        Type type = commonService.getType(ids.get(0));
         for (StandardNormPipe pipe : pipes) {
-            pipe.setPurpose(purposePipeline);
+            pipe.setType(type);
         }
         return pipes;
-    }
-
-    private PurposePipeline getPurposePipeline(Long id) {
-        return purposePipelineRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("purpose pipeline with id=%s not found", id)));
     }
 
     private List<StandardNormPipe> getStandardNormPipe(List<Long> ids) {

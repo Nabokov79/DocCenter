@@ -14,7 +14,11 @@ import java.util.List;
 @Schema(description = "Данные нового паспорта котла")
 public class NewBoilerPassportDto {
 
-    @Schema(description = "Индентификатор котла")
+    @Schema(description = "Номер котла")
+    @NotNull(message = "number should not be blank")
+    @Positive(message = "number must be positive")
+    private Integer number;
+    @Schema(description = "Индентификатор типа котла")
     @NotNull(message = "boiler id should not be blank")
     @Positive(message = "boiler id must be positive")
     private Long boilerId;

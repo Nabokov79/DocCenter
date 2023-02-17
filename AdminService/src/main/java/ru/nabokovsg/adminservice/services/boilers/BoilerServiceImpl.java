@@ -9,6 +9,7 @@ import ru.nabokovsg.adminservice.exceptions.NotFoundException;
 import ru.nabokovsg.adminservice.mappers.boilers.BoilerMapper;
 import ru.nabokovsg.adminservice.models.boilers.Boiler;
 import ru.nabokovsg.adminservice.repositoryes.boilers.BoilerRepository;
+import ru.nabokovsg.adminservice.services.common.CommonService;
 
 import java.util.List;
 
@@ -18,10 +19,11 @@ public class BoilerServiceImpl implements BoilerService {
 
     private final BoilerRepository repository;
     private final BoilerMapper mapper;
+    private final CommonService commonService;
 
     @Override
     public BoilerDto save(NewBoilerDto boilerDto) {
-        Boiler boiler = setLetterCase(mapper.mapToNewBoiler(boilerDto));
+        Boiler boiler = setValue(mapper.mapToNewBoiler(boilerDto), boilerDto.getTypeId());
         return mapper.mapToBoilerDto(repository.save(boiler));
     }
 
@@ -30,7 +32,7 @@ public class BoilerServiceImpl implements BoilerService {
         if (!repository.existsById(boilerDto.getId())) {
             throw new NotFoundException(String.format("boiler with id=%s not found for update", boilerDto.getId()));
         }
-        Boiler boiler = setLetterCase(mapper.mapToUpdateBoiler(boilerDto));
+        Boiler boiler =  setValue(mapper.mapToUpdateBoiler(boilerDto), boilerDto.getTypeId());
         return mapper.mapToBoilerDto(repository.save(boiler));
     }
 
@@ -47,8 +49,8 @@ public class BoilerServiceImpl implements BoilerService {
         throw new NotFoundException(String.format("boiler with id=%s not found for delete", boiId));
     }
 
-    private Boiler setLetterCase(Boiler boiler) {
-        boiler.setType(boiler.getType().toUpperCase());
+    private Boiler setValue(Boiler boiler, Long typId) {
+        boiler.setType(commonService.getType(typId));
         boiler.setModel(boiler.getModel().toUpperCase());
         return boiler;
     }

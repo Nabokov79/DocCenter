@@ -17,9 +17,10 @@ import javax.validation.constraints.Positive;
 @Schema(description = "Данные новых параметров бака")
 public class NewTankParametersDto {
 
-    @Schema(description = "Тип бака, по назначению")
-    @NotBlank(message = "type tank should not be blank")
-    private String typeTank;
+    @Schema(description = "Индентификатор типа бака")
+    @NotNull(message = "type id should not be blank")
+    @Positive(message = "type id author must be positive")
+    private Long typeId;
     @Schema(description = "Положение бака")
     @NotBlank(message = "tank orientation should not be blank")
     private String orientation;

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.adminservice.dtos.tanks.passport.*;
 import ru.nabokovsg.adminservice.exceptions.BadRequestException;
 import ru.nabokovsg.adminservice.models.tanks.Orientation;
-import ru.nabokovsg.adminservice.models.tanks.TypeTank;
 import ru.nabokovsg.adminservice.services.tanks.TankPassportService;
 
 import javax.validation.constraints.NotNull;
@@ -56,16 +55,14 @@ public class TankPassportController {
     @GetMapping
     public ResponseEntity<List<ShortTankPassportDto>> getAll(
             @RequestParam(required = false)
-            @Parameter(description = "Тип бака по назначению") String typeTank,
+            @Parameter(description = "Тип бака по назначению") Long typeId,
             @RequestParam(required = false)
             @Parameter(description = "Положение бака") String orientation,
             @RequestParam(required = false)
             @Parameter(description = "Объем бака") Integer volume,
             @RequestParam(required = false)
             @Parameter(description = "Индентификатор адреса местоположения бака") Long addressId) {
-        TankSearchParam param = new TankSearchParam(
-                TypeTank.from(typeTank)
-                        .orElseThrow(() -> new BadRequestException("Unknown type object: " + typeTank)),
+        TankSearchParam param = new TankSearchParam(typeId,
                 Orientation.from(orientation)
                         .orElseThrow(() -> new BadRequestException("Unknown type object: " + orientation)),
                 volume,addressId

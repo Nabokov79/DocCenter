@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class PipelineIdsDto {
 
-    private Long purposePipelineId;
+    private Long typeId;
     private List<Long> standardNormPipesId;
 }

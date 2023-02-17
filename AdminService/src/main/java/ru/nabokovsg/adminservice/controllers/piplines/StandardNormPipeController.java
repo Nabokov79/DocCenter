@@ -46,8 +46,8 @@ public class StandardNormPipeController {
     @Operation(summary = "Получение данных всех типоразмеров и норм браковки по типу трубопровода")
     @GetMapping
     public ResponseEntity<List<StandardNormPipeDto>> getAll(
-            @RequestParam @Parameter(description = "Индентификатор назначения трубопровода") Long purposePipelineId) {
-        return ResponseEntity.ok().body(service.getAll(purposePipelineId));
+            @RequestParam @Parameter(description = "Индентификатор назначения трубопровода") Long typeId) {
+        return ResponseEntity.ok().body(service.getAll(typeId));
     }
 
     @Operation(summary = "Удаление данных типоразмера и нормы браковки")

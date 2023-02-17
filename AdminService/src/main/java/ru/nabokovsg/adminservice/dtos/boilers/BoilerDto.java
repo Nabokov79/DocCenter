@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.nabokovsg.adminservice.Type;
 
 @Setter
 @Getter
@@ -15,10 +16,8 @@ public class BoilerDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
-    @Schema(description = "Номер котла")
-    private Integer number;
     @Schema(description = "Тип котла")
-    private String type;
+    private Type type;
     @Schema(description = "Модель котла")
     private String model;
 }

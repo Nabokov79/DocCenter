@@ -54,12 +54,12 @@ public class PipelinePassportController {
     @GetMapping
     public ResponseEntity<List<ShortPipelinePassportDto>> getAll(
             @RequestParam(required = false)
-            @Parameter(description = "Индентификатор названия назначения трубопровода")  Long purposePipelineId,
+            @Parameter(description = "Индентификатор названия назначения трубопровода")  Long typeId,
             @RequestParam(required = false)
             @Parameter(description = "Индентификатор адреса местоположения котельной") Long addressId,
             @RequestParam(required = false)
             @Parameter(description = "Местоположение трубопровода на территории котельной") String location) {
-        return ResponseEntity.ok().body(service.getAll(purposePipelineId, addressId, location));
+        return ResponseEntity.ok().body(service.getAll(typeId, addressId, location));
     }
 
     @Operation(summary = "Удаление паспорта")

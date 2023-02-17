@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nabokovsg.adminservice.models.pipelines.PurposePipeline;
+import ru.nabokovsg.adminservice.Type;
 
 @Setter
 @Getter
@@ -15,7 +15,7 @@ public class StandardNormPipeDto {
     @Schema(description = "Индентификатор")
     private Long id;
     @Schema(description = "Назначение трубопровода")
-    private PurposePipeline purposePipeline;
+    private Type type;
     @Schema(description = "Диаметр")
     private Integer diameter;
     @Schema(description = "Толщина стенки")

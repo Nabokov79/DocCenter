@@ -12,7 +12,7 @@ public interface StandardNormPipeService {
 
     List<StandardNormPipeDto> update(List<UpdateStandardNormPipeDto> pipesDto);
 
-    List<StandardNormPipeDto> getAll(Long purposePipelineId);
+    List<StandardNormPipeDto> getAll(Long typeId);
 
     void delete(Long staId);
 }
