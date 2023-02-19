@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Данные нового автора проекта объекта обследования")
+@Schema(description = "Данные нового автора проекта")
 public class NewAuthorDto {
 
     @Schema(description = "Автор проекта")
