@@ -26,14 +26,17 @@ public class Application {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
-    @Column(name = "work")
-    private String work;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "work_id", referencedColumnName = "id")
+    private Work work;
     @Column(name = "passport_type")
     @Enumerated(EnumType.STRING)
     private PassportType passportType;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private Type type;
+    @Column(name = "passport_id")
+    private Long passportId;
     @Column(name = "number")
     private Integer number;
     @Column(name = "orientation")

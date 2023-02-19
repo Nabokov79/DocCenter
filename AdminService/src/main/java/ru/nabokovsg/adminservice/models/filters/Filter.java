@@ -22,8 +22,6 @@ public class Filter {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private Type type;
-    @Column(name = "name")
-    private String name;
     @Column(name = "model")
     private String model;
 }
