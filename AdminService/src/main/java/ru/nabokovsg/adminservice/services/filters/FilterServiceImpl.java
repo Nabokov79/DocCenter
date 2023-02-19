@@ -23,11 +23,11 @@ public class FilterServiceImpl implements FilterService {
     private final CommonService commonService;
     @Override
     public FilterDto save(NewFilterDto filterDto) {
-        if (repository.existsByNameAndModel(filterDto.getName(), filterDto.getModel())) {
-            throw new BadRequestException(String.format("filter=%s found", filterDto));
-        }
         Filter filter = setLetterCase(mapper.mapToNewFilter(filterDto));
         filter.setType(commonService.getType(filterDto.getTypeId()));
+        if (repository.existsByTypeAndModel(filter.getType(), filter.getModel())) {
+            throw new BadRequestException(String.format("filter=%s found", filterDto));
+        }
         return mapper.mapToFilterDto(repository.save(filter));
     }
 
@@ -55,9 +55,6 @@ public class FilterServiceImpl implements FilterService {
     }
 
     private Filter setLetterCase(Filter filter) {
-        if (filter.getName().length() <= 3) {
-            filter.setName(filter.getName().toUpperCase());
-        }
         if (!filter.getModel().isEmpty()) {
             filter.setModel(filter.getModel().toUpperCase());
         }

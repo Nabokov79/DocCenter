@@ -45,6 +45,7 @@ public class BoilerServiceImpl implements BoilerService {
     public void delete(Long boiId) {
         if (repository.existsById(boiId)) {
             repository.deleteById(boiId);
+            return;
         }
         throw new NotFoundException(String.format("boiler with id=%s not found for delete", boiId));
     }

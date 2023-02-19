@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.adminservice.dtos.CommonDto;
 import ru.nabokovsg.adminservice.dtos.RequestIds;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoilerPassportServiceImpl implements BoilerPassportService {
 
     private final BoilerPassportRepository repository;
@@ -33,7 +35,6 @@ public class BoilerPassportServiceImpl implements BoilerPassportService {
     private final CommonService commonService;
     private final EntityManager entityManager;
 
-
     @Override
     public BoilerPassportDto save(NewBoilerPassportDto passportDto) {
         RequestIds requestIds = mapper.mapToNewRequestIdsDto(passportDto);
@@ -41,8 +42,7 @@ public class BoilerPassportServiceImpl implements BoilerPassportService {
                                             passportDto.getBoilerId(),
                                             requestIds);
         if (repository.existsByBoilerAndAddress(passport.getBoiler(), passport.getAddress())) {
-            throw new BadRequestException(
-                    String.format("boiler passport =%s found", passportDto));
+            throw new BadRequestException(String.format("boiler passport =%s found", passportDto));
         }
         return mapper.mapToBoilerPassportDto(repository.save(passport));
     }
@@ -92,6 +92,7 @@ public class BoilerPassportServiceImpl implements BoilerPassportService {
     public void delete(Long pasId) {
         if (repository.existsById(pasId)) {
             repository.deleteById(pasId);
+            return;
         }
         throw new NotFoundException(String.format("boiler passport with id=%s not found for delete", pasId));
     }
@@ -104,5 +105,4 @@ public class BoilerPassportServiceImpl implements BoilerPassportService {
                            String.format("boiler with id=%s not found for set passport", boilerId))));
        }
         return mapper.mapToBoilerPassport(passport, common);
-    }
-}
+    }}

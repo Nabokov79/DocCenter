@@ -16,8 +16,6 @@ public class FilterDto {
     private Long id;
     @Schema(description = "Тип фильтра")
     private Type type;
-    @Schema(description = "Назначение фильтра")
-    private String name;
     @Schema(description = "Модель фильтра")
     private String model;
 }

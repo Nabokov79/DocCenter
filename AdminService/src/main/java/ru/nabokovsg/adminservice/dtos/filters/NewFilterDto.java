@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -20,16 +19,14 @@ public class NewFilterDto {
     @NotNull(message = "type id should not be blank")
     @Positive(message = "type id must be positive")
     private Long typeId;
-    @Schema(description = "Назначение фильтра")
-    @NotBlank(message = "name filter should not be blank")
-    private String name;
+
     @Schema(description = "Модель фильтра")
     private String model;
 
     @Override
     public String toString() {
         return "NewFilterDto{" +
-                "name='" + name + '\'' +
+                "typeId=" + typeId +
                 ", model='" + model + '\'' +
                 '}';
     }
