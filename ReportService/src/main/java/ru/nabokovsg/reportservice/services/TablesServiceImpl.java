@@ -17,11 +17,11 @@ public class TablesServiceImpl implements TablesService {
     @Override
     public void save(Tables tables) {
         Tables tablesDb = repository.save(tables);
-        tables.setTableColumns(tablesDb.getTableColumns());
-        for(TableColumns columns : tables.getTableColumns()) {
-            columns.setTables(tables);
+        tablesDb.setTableColumns(tables.getTableColumns());
+        for(TableColumns columns : tablesDb.getTableColumns()) {
+            columns.setTables(tablesDb);
         }
-        columnsRepository.saveAll(tables.getTableColumns());
+        columnsRepository.saveAll(tablesDb.getTableColumns());
     }
 }
 
