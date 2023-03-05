@@ -14,4 +14,6 @@ public interface ReportPatternMapper {
     ReportPatternDto mapToReportPatternDto(ReportPattern pattern);
 
     ReportPattern fromUpdateReportPattern(UpdateReportPatternDto patternDto);
+
+    ReportPattern toReportPattern(ReportPatternDto patternDto);
 }
