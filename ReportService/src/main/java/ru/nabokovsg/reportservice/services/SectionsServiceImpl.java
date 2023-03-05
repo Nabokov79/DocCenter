@@ -7,14 +7,12 @@ import ru.nabokovsg.reportservice.dtos.SectionDto;
 import ru.nabokovsg.reportservice.dtos.UpdateSectionDto;
 import ru.nabokovsg.reportservice.exceptions.BadRequestException;
 import ru.nabokovsg.reportservice.exceptions.NotFoundException;
+import ru.nabokovsg.reportservice.mappers.ReportPatternMapper;
 import ru.nabokovsg.reportservice.mappers.SectionsMapper;
 import ru.nabokovsg.reportservice.models.ReportPattern;
 import ru.nabokovsg.reportservice.models.Sections;
 import ru.nabokovsg.reportservice.models.Subsections;
-import ru.nabokovsg.reportservice.repositoryes.ReportPatternRepository;
 import ru.nabokovsg.reportservice.repositoryes.SectionsRepository;
-import ru.nabokovsg.reportservice.repositoryes.SubsectionsRepository;
-
 import java.util.List;
 
 @Service
@@ -22,10 +20,10 @@ import java.util.List;
 public class SectionsServiceImpl implements SectionsService {
 
     private final SectionsRepository repository;
-    private final ReportPatternRepository patternRepository;
-    private final SubsectionsRepository subsectionsRepository;
     private final SectionsMapper mapper;
-    private final TablesService tablesService;
+    private final SubsectionsService subsectionsService;
+    private final ReportPatternMapper reportPatternMapper;
+    private final ReportPatternService reportPatternService;
 
     @Override
     public SectionDto save(NewSectionDto sectionDto) {
@@ -38,8 +36,7 @@ public class SectionsServiceImpl implements SectionsService {
         }
         Sections section = mapper.mapToSections(sectionDto);
         section.setReportPattern(pattern);
-        repository.save(section);
-        saveSubsections(section, sectionDto.getSubsections());
+        saveSubsections(repository.save(section), sectionDto.getSubsections());
         return mapper.mapToSectionsDto(section);
     }
 
@@ -50,7 +47,9 @@ public class SectionsServiceImpl implements SectionsService {
                     String.format("section with id=%s not found for update.", sectionDto.getId()));
         }
         Sections section = mapper.maoToUpdateSections(sectionDto);
-        return mapper.mapToSectionsDto(repository.save(section));
+        section.setReportPattern(getReportPattern(sectionDto.getReportPatternId()));
+        saveSubsections(repository.save(section), sectionDto.getSubsections());
+        return mapper.mapToSectionsDto(section);
     }
 
     @Override
@@ -60,17 +59,12 @@ public class SectionsServiceImpl implements SectionsService {
     }
 
     private ReportPattern getReportPattern(Long id) {
-        return patternRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("pattern witch id=%s not found", id)));
+        return reportPatternMapper.toReportPattern(reportPatternService.get(id));
     }
 
     private void saveSubsections(Sections section, List<Subsections> subsections) {
-        for (Subsections subsection : subsections) {
-            subsection.setSections(section);
-            if (subsection.getTables() != null) {
-                tablesService.save(subsection.getTables());
-            }
+        if (!subsections.isEmpty()) {
+            subsectionsService.save(section, subsections);
         }
-        subsectionsRepository.saveAll(subsections);
     }
 }
