@@ -25,6 +25,9 @@ public class Subsections {
     @Column(name = "text")
     private String text;
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "constant_id", referencedColumnName = "id")
+    private Constant constant;
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tables_id", referencedColumnName = "id")
     private Tables tables;
     @ManyToOne
@@ -40,6 +43,8 @@ public class Subsections {
                 ", heading='" + heading + '\'' +
                 ", text='" + text + '\'' +
                 ", tables=" + tables +
+                ", sections=" + sections +
+                ", constant=" + constant +
                 '}';
     }
 }
