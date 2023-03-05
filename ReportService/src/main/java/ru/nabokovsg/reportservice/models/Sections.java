@@ -29,6 +29,7 @@ public class Sections {
     private Set<DrawingSection> drawingSections;
     @ManyToOne
     @JoinColumn(name = "report_pattern_id")
+    @JsonIgnore
     private ReportPattern reportPattern;
 
     @Override
