@@ -19,17 +19,16 @@ import ru.nabokovsg.reportservice.repositoryes.*;
 public class ReportPatternServiceImpl implements ReportPatternService {
 
     private final ReportPatternRepository repository;
-    private final SectionsRepository sectionsRepository;
     private final ReportPatternMapper mapper;
 
     @Override
     public ReportPatternDto save(NewReportPatternDto patternDto) {
-        PatternType patternType = getType(patternDto.getType());
-        if (repository.existsByPatternType(patternType)) {
+        PatternType type = getType(patternDto.getType());
+        if (repository.existsByType(type)) {
             throw new BadRequestException(String.format("report pattern for type=%s found", patternDto));
         }
         ReportPattern pattern = mapper.mapToReportPattern(patternDto);
-        pattern.setPatternType(patternType);
+        pattern.setType(type);
         return mapper.mapToReportPatternDto(repository.save(pattern));
     }
 
@@ -40,19 +39,16 @@ public class ReportPatternServiceImpl implements ReportPatternService {
                     String.format("report pattern with id=%s not found for update.", patternDto.getId()));
         }
         ReportPattern pattern = mapper.fromUpdateReportPattern(patternDto);
-        pattern.setPatternType(getType(patternDto.getType()));
+        pattern.setType(getType(patternDto.getType()));
         return mapper.mapToReportPatternDto(pattern);
     }
 
     @Override
     public ReportPatternDto get(Long patId) {
-        ReportPattern pattern = repository.findById(patId)
-                .orElseThrow(() -> new NotFoundException(String.format("pattern witch id=%s not found", patId)));
-        log.info("Pattern = " + pattern);
-        ReportPatternDto patternDto = mapper.mapToReportPatternDto(pattern);
-        log.info("Pattern DTO = " + patternDto);
-        return patternDto;
+        return mapper.mapToReportPatternDto(repository.findById(patId)
+                .orElseThrow(() -> new NotFoundException(String.format("pattern witch id=%s not found", patId))));
     }
+
 
     private PatternType getType(String type) {
         return PatternType.from(type)

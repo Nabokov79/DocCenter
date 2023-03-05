@@ -19,9 +19,9 @@ public class ReportPattern {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "pattern_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private PatternType patternType;
+    private PatternType type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "title_id", referencedColumnName = "id")
     private Title title;
@@ -33,7 +33,7 @@ public class ReportPattern {
     public String toString() {
         return "ReportPattern{" +
                 "id=" + id +
-                ", patternType=" + patternType +
+                ", type=" + type +
                 ", title=" + title +
                 ", sections=" + sections +
                 '}';

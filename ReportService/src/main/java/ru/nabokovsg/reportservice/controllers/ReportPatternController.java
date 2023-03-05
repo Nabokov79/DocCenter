@@ -22,7 +22,7 @@ import ru.nabokovsg.reportservice.services.ReportPatternService;
 @RequiredArgsConstructor
 @Validated
 @Tag(name="Шаблон отчета",
-        description="API для работы с шаблона отчета")
+     description="API для работы с шаблона отчета")
 @Slf4j
 public class ReportPatternController {
 
@@ -42,11 +42,9 @@ public class ReportPatternController {
         return ResponseEntity.ok().body(service.update(patternDto));
     }
 
-    @Operation(summary = "Добавление нового шаблона отчета")
+    @Operation(summary = "Получение шаблона отчета")
     @GetMapping("/{patId}")
     public ResponseEntity<ReportPatternDto> get(@PathVariable Long patId) {
-        ReportPatternDto patternDto = service.get(patId);
-        log.info("Pattern DTO CONTROLLER = " + patternDto);
-        return ResponseEntity.ok().body(patternDto);
+        return ResponseEntity.ok().body(service.get(patId));
     }
 }

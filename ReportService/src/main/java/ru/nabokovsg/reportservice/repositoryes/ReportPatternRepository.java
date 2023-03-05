@@ -6,5 +6,5 @@ import ru.nabokovsg.reportservice.models.ReportPattern;
 
 public interface ReportPatternRepository extends JpaRepository<ReportPattern, Long> {
 
-    boolean existsByPatternType(PatternType patternType);
+    boolean existsByType(PatternType type);
 }
