@@ -49,7 +49,6 @@ public class ReportPatternServiceImpl implements ReportPatternService {
                 .orElseThrow(() -> new NotFoundException(String.format("pattern witch id=%s not found", patId))));
     }
 
-
     private PatternType getType(String type) {
         return PatternType.from(type)
                 .orElseThrow(() -> new BadRequestException("Unknown type object: " + type));
