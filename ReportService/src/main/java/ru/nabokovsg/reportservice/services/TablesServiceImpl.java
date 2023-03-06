@@ -13,6 +13,8 @@ public class TablesServiceImpl implements TablesService {
 
     private final TablesRepository repository;
     private final TableColumnsRepository columnsRepository;
+    private final SubTableService subTableService;
+    private final ElementService elementService;
 
     @Override
     public void save(Tables tables) {
@@ -22,6 +24,11 @@ public class TablesServiceImpl implements TablesService {
             columns.setTables(tablesDb);
         }
         columnsRepository.saveAll(tablesDb.getTableColumns());
+        if (tables.getElements() != null) {
+            elementService.saveFromTable(tablesDb, tables.getElements());
+        } else if (tables.getSubTables() != null){
+            subTableService.save(tablesDb,tables.getSubTables());
+        }
     }
 }
 
