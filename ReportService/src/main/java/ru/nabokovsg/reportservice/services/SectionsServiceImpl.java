@@ -76,9 +76,11 @@ public class SectionsServiceImpl implements SectionsService {
         }
     }
     private void saveDrawing(Sections section, Set<DrawingSection> drawings) {
-        for (DrawingSection drawing : drawings) {
-            drawing.setSections(section);
+        if (drawings != null) {
+            for (DrawingSection drawing : drawings) {
+                drawing.setSections(section);
+            }
+            drawingSectionService.save(drawings);
         }
-        drawingSectionService.save(drawings);
     }
 }
