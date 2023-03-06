@@ -20,7 +20,7 @@ public class DrawingSection {
     @Column(name = "type")
     private String type;
     @Column(name = "number")
-    private Double number;
+    private Integer number;
     @Column(name = "description")
     private String description;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

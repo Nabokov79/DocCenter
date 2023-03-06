@@ -24,9 +24,14 @@ public class Subsections {
     private String heading;
     @Column(name = "text")
     private String text;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "constant_id", referencedColumnName = "id")
-    private Constant constant;
+    @Column(name = "paragraph")
+    private String paragraph;
+    @Column(name = "place")
+    private String place;
+    @Column(name = "deviation_size")
+    private String deviationSize;
+    @Column(name = "conclusion")
+    private String conclusion;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tables_id", referencedColumnName = "id")
     private Tables tables;
@@ -44,7 +49,6 @@ public class Subsections {
                 ", text='" + text + '\'' +
                 ", tables=" + tables +
                 ", sections=" + sections +
-                ", constant=" + constant +
                 '}';
     }
 }

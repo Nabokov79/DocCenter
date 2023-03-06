@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.nabokovsg.reportservice.models.DrawingSection;
-import ru.nabokovsg.reportservice.models.ReportPattern;
 import ru.nabokovsg.reportservice.models.Subsections;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -29,10 +27,9 @@ public class NewSectionDto {
     @NotBlank(message = "heading should not be blank")
     private String heading;
     @Schema(description = "Список подразделов")
-    @NotEmpty(message = "subsections should not be blank")
     private List<Subsections> subsections;
     @Schema(description = "Список подразделов")
-    private List<DrawingSection> drawingSections;
+    private List<DrawingSection> drawing;
     @Schema(description = "Индентификатор шаблона")
     @NotNull(message = "report pattern id should not be blank")
     @Positive(message = "report pattern id can only be positive")
