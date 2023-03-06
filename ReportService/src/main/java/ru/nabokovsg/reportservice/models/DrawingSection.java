@@ -1,5 +1,6 @@
 package ru.nabokovsg.reportservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class DrawingSection {
     private String description;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "sections_id",  nullable = false)
+    @JsonIgnore
     private Sections sections;
 }
