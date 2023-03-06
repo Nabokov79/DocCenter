@@ -9,6 +9,7 @@ import ru.nabokovsg.reportservice.exceptions.BadRequestException;
 import ru.nabokovsg.reportservice.exceptions.NotFoundException;
 import ru.nabokovsg.reportservice.mappers.ReportPatternMapper;
 import ru.nabokovsg.reportservice.mappers.SectionsMapper;
+import ru.nabokovsg.reportservice.models.DrawingSection;
 import ru.nabokovsg.reportservice.models.ReportPattern;
 import ru.nabokovsg.reportservice.models.Sections;
 import ru.nabokovsg.reportservice.models.Subsections;
@@ -24,6 +25,7 @@ public class SectionsServiceImpl implements SectionsService {
     private final SubsectionsService subsectionsService;
     private final ReportPatternMapper reportPatternMapper;
     private final ReportPatternService reportPatternService;
+    private final DrawingSectionService drawingSectionService;
 
     @Override
     public SectionDto save(NewSectionDto sectionDto) {
@@ -48,7 +50,9 @@ public class SectionsServiceImpl implements SectionsService {
         }
         Sections section = mapper.maoToUpdateSections(sectionDto);
         section.setReportPattern(getReportPattern(sectionDto.getReportPatternId()));
-        saveSubsections(repository.save(section), sectionDto.getSubsections());
+        Sections sectionDb = repository.save(section);
+        saveSubsections(sectionDb, sectionDto.getSubsections());
+        saveDrawing(sectionDb, section.getDrawing().stream().toList());
         return mapper.mapToSectionsDto(section);
     }
 
@@ -63,8 +67,14 @@ public class SectionsServiceImpl implements SectionsService {
     }
 
     private void saveSubsections(Sections section, List<Subsections> subsections) {
-        if (!subsections.isEmpty()) {
+        if (subsections != null) {
             subsectionsService.save(section, subsections);
         }
+    }
+    private void saveDrawing(Sections section, List<DrawingSection> drawings) {
+        for (DrawingSection drawing : drawings) {
+            drawing.setSections(section);
+        }
+        drawingSectionService.save(drawings);
     }
 }
