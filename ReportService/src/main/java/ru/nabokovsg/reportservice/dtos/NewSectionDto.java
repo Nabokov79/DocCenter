@@ -29,7 +29,7 @@ public class NewSectionDto {
     @Schema(description = "Список подразделов")
     private List<Subsections> subsections;
     @Schema(description = "Список подразделов")
-    private List<DrawingSection> drawing;
+    private List<DrawingSection> drawings;
     @Schema(description = "Индентификатор шаблона")
     @NotNull(message = "report pattern id should not be blank")
     @Positive(message = "report pattern id can only be positive")

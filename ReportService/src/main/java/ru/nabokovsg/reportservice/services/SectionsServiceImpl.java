@@ -1,6 +1,7 @@
 package ru.nabokovsg.reportservice.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.reportservice.dtos.NewSectionDto;
 import ru.nabokovsg.reportservice.dtos.SectionDto;
@@ -15,9 +16,11 @@ import ru.nabokovsg.reportservice.models.Sections;
 import ru.nabokovsg.reportservice.models.Subsections;
 import ru.nabokovsg.reportservice.repositoryes.SectionsRepository;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SectionsServiceImpl implements SectionsService {
 
     private final SectionsRepository repository;
@@ -38,7 +41,9 @@ public class SectionsServiceImpl implements SectionsService {
         }
         Sections section = mapper.mapToSections(sectionDto);
         section.setReportPattern(pattern);
-        saveSubsections(repository.save(section), sectionDto.getSubsections());
+        Sections sectionDb = repository.save(section);
+        saveSubsections(sectionDb, sectionDto.getSubsections());
+        saveDrawing(sectionDb, section.getDrawings());
         return mapper.mapToSectionsDto(section);
     }
 
@@ -52,7 +57,6 @@ public class SectionsServiceImpl implements SectionsService {
         section.setReportPattern(getReportPattern(sectionDto.getReportPatternId()));
         Sections sectionDb = repository.save(section);
         saveSubsections(sectionDb, sectionDto.getSubsections());
-        saveDrawing(sectionDb, section.getDrawing().stream().toList());
         return mapper.mapToSectionsDto(section);
     }
 
@@ -71,7 +75,7 @@ public class SectionsServiceImpl implements SectionsService {
             subsectionsService.save(section, subsections);
         }
     }
-    private void saveDrawing(Sections section, List<DrawingSection> drawings) {
+    private void saveDrawing(Sections section, Set<DrawingSection> drawings) {
         for (DrawingSection drawing : drawings) {
             drawing.setSections(section);
         }
