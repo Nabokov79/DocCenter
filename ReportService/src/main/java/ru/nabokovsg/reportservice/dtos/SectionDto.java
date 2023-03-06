@@ -20,5 +20,5 @@ public class SectionDto {
     private Integer numberSection;
     private String heading;
     private List<Subsections> subsections;
-    private List<DrawingSection> drawingSections;
+    private List<DrawingSection> drawings;
 }
