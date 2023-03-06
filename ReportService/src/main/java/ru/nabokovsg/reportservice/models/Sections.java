@@ -26,7 +26,7 @@ public class Sections {
     @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
     private Set<Subsections> subsections;
     @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
-    private Set<DrawingSection> drawingSections;
+    private Set<DrawingSection> drawing;
     @ManyToOne
     @JoinColumn(name = "report_pattern_id")
     @JsonIgnore
@@ -39,7 +39,7 @@ public class Sections {
                 ", numberSection=" + numberSection +
                 ", heading='" + heading + '\'' +
                 ", subsections=" + subsections +
-                ", drawingSections=" + drawingSections +
+                ", drawing=" + drawing +
                 '}';
     }
 }

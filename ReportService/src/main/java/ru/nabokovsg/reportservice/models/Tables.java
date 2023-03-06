@@ -26,6 +26,10 @@ public class Tables {
     private CombinedColumns combinedColumns;
     @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
     private Set<TableColumns> tableColumns;
+    @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
+    private Set<Element> elements;
+    @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
+    private Set<SubTable> subTables;
 
     @Override
     public String toString() {
@@ -34,6 +38,8 @@ public class Tables {
                 ", name='" + name + '\'' +
                 ", combinedColumns=" + combinedColumns +
                 ", tableColumns=" + tableColumns +
+                ", elements=" + elements +
+                ", subTables=" + subTables +
                 '}';
     }
 }
