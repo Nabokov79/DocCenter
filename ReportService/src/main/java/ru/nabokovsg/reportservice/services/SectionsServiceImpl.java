@@ -10,13 +10,9 @@ import ru.nabokovsg.reportservice.exceptions.BadRequestException;
 import ru.nabokovsg.reportservice.exceptions.NotFoundException;
 import ru.nabokovsg.reportservice.mappers.ReportPatternMapper;
 import ru.nabokovsg.reportservice.mappers.SectionsMapper;
-import ru.nabokovsg.reportservice.models.DrawingSection;
 import ru.nabokovsg.reportservice.models.ReportPattern;
 import ru.nabokovsg.reportservice.models.Sections;
-import ru.nabokovsg.reportservice.models.Subsections;
 import ru.nabokovsg.reportservice.repositoryes.SectionsRepository;
-import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +38,8 @@ public class SectionsServiceImpl implements SectionsService {
         Sections section = mapper.mapToSections(sectionDto);
         section.setReportPattern(pattern);
         Sections sectionDb = repository.save(section);
-        saveSubsections(sectionDb, sectionDto.getSubsections());
-        saveDrawing(sectionDb, section.getDrawings());
+        subsectionsService.save(sectionDb, sectionDto.getSubsections());
+        drawingSectionService.save(sectionDb, sectionDto.getDrawings());
         return mapper.mapToSectionsDto(section);
     }
 
@@ -56,7 +52,8 @@ public class SectionsServiceImpl implements SectionsService {
         Sections section = mapper.maoToUpdateSections(sectionDto);
         section.setReportPattern(getReportPattern(sectionDto.getReportPatternId()));
         Sections sectionDb = repository.save(section);
-        saveSubsections(sectionDb, sectionDto.getSubsections());
+        subsectionsService.save(sectionDb, sectionDto.getSubsections());
+        drawingSectionService.save(sectionDb, sectionDto.getDrawings());
         return mapper.mapToSectionsDto(section);
     }
 
@@ -68,19 +65,5 @@ public class SectionsServiceImpl implements SectionsService {
 
     private ReportPattern getReportPattern(Long id) {
         return reportPatternMapper.toReportPattern(reportPatternService.get(id));
-    }
-
-    private void saveSubsections(Sections section, List<Subsections> subsections) {
-        if (subsections != null) {
-            subsectionsService.save(section, subsections);
-        }
-    }
-    private void saveDrawing(Sections section, Set<DrawingSection> drawings) {
-        if (drawings != null) {
-            for (DrawingSection drawing : drawings) {
-                drawing.setSections(section);
-            }
-            drawingSectionService.save(drawings);
-        }
     }
 }

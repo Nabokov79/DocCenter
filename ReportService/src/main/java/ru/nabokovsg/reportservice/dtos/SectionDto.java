@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.nabokovsg.reportservice.models.DrawingSection;
+import ru.nabokovsg.reportservice.models.Drawing;
 import ru.nabokovsg.reportservice.models.Subsections;
 import java.util.List;
 
@@ -20,5 +20,5 @@ public class SectionDto {
     private Integer numberSection;
     private String heading;
     private List<Subsections> subsections;
-    private List<DrawingSection> drawings;
+    private List<Drawing> drawings;
 }

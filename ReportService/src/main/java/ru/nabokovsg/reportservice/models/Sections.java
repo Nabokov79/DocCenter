@@ -19,14 +19,14 @@ public class Sections {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "number_section")
-    private Integer numberSection;
+    @Column(name = "number")
+    private Integer number;
     @Column(name = "heading")
     private String heading;
     @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
     private Set<Subsections> subsections;
     @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
-    private Set<DrawingSection> drawings;
+    private Set<Drawing> drawings;
     @ManyToOne
     @JoinColumn(name = "report_pattern_id")
     @JsonIgnore
@@ -36,7 +36,7 @@ public class Sections {
     public String toString() {
         return "Sections{" +
                 "id=" + id +
-                ", numberSection=" + numberSection +
+                ", number=" + number +
                 ", heading='" + heading + '\'' +
                 ", subsections=" + subsections +
                 ", drawings=" + drawings +

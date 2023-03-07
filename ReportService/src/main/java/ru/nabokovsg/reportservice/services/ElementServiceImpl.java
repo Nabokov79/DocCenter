@@ -27,17 +27,21 @@ public class ElementServiceImpl implements ElementService {
 
     @Override
     public void saveFromSubTable(SubTable subTable, Set<Element> elements) {
-        for (Element element : elements) {
-            element.setSubTable(subTable);
-            save(element);
+        if (elements != null && !elements.isEmpty()) {
+            for (Element element : elements) {
+                element.setSubTable(subTable);
+                save(element);
+            }
         }
     }
 
     private void save(Element element) {
-        Element elementDb = repository.save(element);
-        for (Defect defect: element.getDefect()) {
-            defect.setElement(elementDb);
+        if (element != null) {
+            Element elementDb = repository.save(element);
+            for (Defect defect: element.getDefect()) {
+                defect.setElement(elementDb);
+            }
+            defectRepository.saveAll(element.getDefect());
         }
-        defectRepository.saveAll(element.getDefect());
     }
 }
