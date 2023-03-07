@@ -12,8 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "drawings_sections")
-public class DrawingSection {
+@Table(name = "drawings")
+public class Drawing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
