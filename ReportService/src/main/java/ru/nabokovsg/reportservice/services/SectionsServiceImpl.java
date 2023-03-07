@@ -24,14 +24,14 @@ public class SectionsServiceImpl implements SectionsService {
     private final SubsectionsService subsectionsService;
     private final ReportPatternMapper reportPatternMapper;
     private final ReportPatternService reportPatternService;
-    private final DrawingSectionService drawingSectionService;
+    private final DrawingService drawingSectionService;
 
     @Override
     public SectionDto save(NewSectionDto sectionDto) {
         ReportPattern pattern = getReportPattern(sectionDto.getReportPatternId());
-        if (repository.existsByNumberSectionAndReportPattern(sectionDto.getNumberSection(), pattern)) {
+        if (repository.existsByNumberSectionAndReportPattern(sectionDto.getNumber(), pattern)) {
             throw new BadRequestException(
-                    String.format("section with number=%s for pattern with id=%s found", sectionDto.getNumberSection(),
+                    String.format("section with number=%s for pattern with id=%s found", sectionDto.getNumber(),
                                                                                       sectionDto.getReportPatternId())
             );
         }

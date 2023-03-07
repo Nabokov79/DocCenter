@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.reportservice.models.Drawing;
 import ru.nabokovsg.reportservice.models.Sections;
-import ru.nabokovsg.reportservice.repositoryes.DrawingSectionRepository;
+import ru.nabokovsg.reportservice.repositoryes.DrawingRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DrawingSectionServiceImpl implements DrawingSectionService {
+public class DrawingServiceImpl implements DrawingService {
 
-    private final DrawingSectionRepository repository;
+    private final DrawingRepository repository;
 
     @Override
     public void save(Sections section, List<Drawing> drawings) {
