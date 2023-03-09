@@ -20,7 +20,7 @@ public class SubsectionsServiceImpl implements SubsectionsService {
         if (subsections != null && !subsections.isEmpty()) {
             for (Subsections subsection : subsections) {
                 subsection.setSections(section);
-                tablesService.save(subsection.getTables());
+                tablesService.save(section.getReportPattern(), subsection.getTables());
             }
             subsectionsRepository.saveAll(subsections);
         }

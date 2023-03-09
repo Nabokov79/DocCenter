@@ -29,7 +29,7 @@ public class SectionsServiceImpl implements SectionsService {
     @Override
     public SectionDto save(NewSectionDto sectionDto) {
         ReportPattern pattern = getReportPattern(sectionDto.getReportPatternId());
-        if (repository.existsByNumberSectionAndReportPattern(sectionDto.getNumber(), pattern)) {
+        if (repository.existsByNumberAndReportPattern(sectionDto.getNumber(), pattern)) {
             throw new BadRequestException(
                     String.format("section with number=%s for pattern with id=%s found", sectionDto.getNumber(),
                                                                                       sectionDto.getReportPatternId())

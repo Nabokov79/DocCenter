@@ -21,19 +21,13 @@ public class SubTableServiceImpl implements SubTableService {
         validate(tables);
         for (SubTable subTable : tables) {
             subTable.setTables(table);
-            elementService.saveFromSubTable(repository.save(subTable), subTable.getElements());
+            elementService.save(repository.save(subTable), subTable.getElements());
         }
         return repository.saveAll(tables);
     }
 
-    private void validate(Set<SubTable> tables) {
-        if (tables == null) {
-            throw new BadRequestException("sub table should not be null");
-        }
-        if (!tables.isEmpty()) {
-            throw new BadRequestException("sub table should not be empty");
-        }
-        for (SubTable subTable : tables) {
+    private void validate(Set<SubTable> subTables) {
+        for (SubTable subTable : subTables) {
             if (subTable.getName() == null) {
                 throw new BadRequestException("name sub table should not be null");
             }

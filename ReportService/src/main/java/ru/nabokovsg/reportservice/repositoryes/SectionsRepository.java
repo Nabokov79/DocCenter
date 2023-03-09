@@ -6,5 +6,5 @@ import ru.nabokovsg.reportservice.models.Sections;
 
 public interface SectionsRepository extends JpaRepository<Sections, Long> {
 
-    boolean existsByNumberSectionAndReportPattern(Integer numberSection, ReportPattern reportPattern);
+    boolean existsByNumberAndReportPattern(Integer number, ReportPattern reportPattern);
 }
