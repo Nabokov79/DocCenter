@@ -18,10 +18,10 @@ public class CombinedColumns {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "column_first")
-    private Integer columnFirst;
-    @Column(name = "column_second")
-    private Integer columnSecond;
+    @Column(name = "first")
+    private Integer first;
+    @Column(name = "second")
+    private Integer second;
     @Column(name = "name")
     private String name;
 }

@@ -18,8 +18,8 @@ public class Title {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "text")
+    @Columns(name = "text")
     private String text;
-    @Column(name = "city")
+    @Columns(name = "city")
     private String city;
 }

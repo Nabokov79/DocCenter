@@ -18,19 +18,19 @@ public class Subsections {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "number")
+    @Columns(name = "number")
     private Double number;
-    @Column(name = "heading")
+    @Columns(name = "heading")
     private String heading;
-    @Column(name = "text")
+    @Columns(name = "text")
     private String text;
-    @Column(name = "paragraph")
+    @Columns(name = "paragraph")
     private String paragraph;
-    @Column(name = "place")
+    @Columns(name = "place")
     private String place;
-    @Column(name = "deviation_size")
+    @Columns(name = "deviation_size")
     private String deviationSize;
-    @Column(name = "conclusion")
+    @Columns(name = "conclusion")
     private String conclusion;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tables_id", referencedColumnName = "id")

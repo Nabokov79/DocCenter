@@ -27,5 +27,5 @@ public class SubTable {
     @ManyToOne
     @JoinColumn(name = "table_id")
     @JsonIgnore
-    private Tables tables;
+    private Tables table;
 }

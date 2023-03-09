@@ -21,25 +21,12 @@ public class Tables {
     private long id;
     @Column(name = "name")
     private String name;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "combined_columns_id", referencedColumnName = "id")
-    private CombinedColumns combinedColumns;
-    @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
-    private Set<TableColumns> tableColumns;
-    @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
-    private Set<Element> elements;
-    @OneToMany(mappedBy = "tables", fetch = FetchType.LAZY)
+    @Column(name = "note")
+    private String note;
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
+    private Set<Columns> columns;
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     private Set<SubTable> subTables;
-
-    @Override
-    public String toString() {
-        return "Tables{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", combinedColumns=" + combinedColumns +
-                ", tableColumns=" + tableColumns +
-                ", elements=" + elements +
-                ", subTables=" + subTables +
-                '}';
-    }
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
+    private Set<Element> elements;
 }
