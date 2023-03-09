@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +22,7 @@ import ru.nabokovsg.reportservice.services.ReportPatternService;
 @Validated
 @Tag(name="Шаблон отчета",
      description="API для работы с шаблона отчета")
-@Slf4j
+
 public class ReportPatternController {
 
     private final ReportPatternService service;
