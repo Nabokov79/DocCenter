@@ -14,14 +14,12 @@ import java.util.Set;
 public class SubTableServiceImpl implements SubTableService {
 
     private final SubTableRepository repository;
-    private final ElementService elementService;
 
     @Override
     public List<SubTable> save(Tables table, Set<SubTable> tables) {
         validate(tables);
         for (SubTable subTable : tables) {
-            subTable.setTables(table);
-            elementService.save(repository.save(subTable), subTable.getElements());
+            subTable.setTable(table);
         }
         return repository.saveAll(tables);
     }
@@ -30,9 +28,6 @@ public class SubTableServiceImpl implements SubTableService {
         for (SubTable subTable : subTables) {
             if (subTable.getName() == null) {
                 throw new BadRequestException("name sub table should not be null");
-            }
-            if (subTable.getElements().isEmpty()) {
-                throw new BadRequestException("elements list in sub table should not be empty");
             }
         }
     }
