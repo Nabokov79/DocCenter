@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.nabokovsg.reportservice.models.Drawing;
 import ru.nabokovsg.reportservice.models.Subsections;
+import ru.nabokovsg.reportservice.models.Tables;
+
 import java.util.List;
 
 @Setter
@@ -17,7 +19,7 @@ import java.util.List;
 public class SectionDto {
 
     private long id;
-    private Integer numberSection;
+    private Integer number;
     private String heading;
     private List<Subsections> subsections;
     private List<Drawing> drawings;

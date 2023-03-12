@@ -22,8 +22,6 @@ public class SubTable {
     private long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "subTable", fetch = FetchType.LAZY)
-    private Set<Element> elements;
     @ManyToOne
     @JoinColumn(name = "table_id")
     @JsonIgnore

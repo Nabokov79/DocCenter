@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -18,37 +19,24 @@ public class Subsections {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Columns(name = "number")
+    @Column(name = "number")
     private Double number;
-    @Columns(name = "heading")
+    @Column(name = "heading")
     private String heading;
-    @Columns(name = "text")
+    @Column(name = "text")
     private String text;
-    @Columns(name = "paragraph")
+    @Column(name = "paragraph")
     private String paragraph;
-    @Columns(name = "place")
+    @Column(name = "place")
     private String place;
-    @Columns(name = "deviation_size")
+    @Column(name = "deviation_size")
     private String deviationSize;
-    @Columns(name = "conclusion")
+    @Column(name = "conclusion")
     private String conclusion;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tables_id", referencedColumnName = "id")
-    private Tables tables;
+    @OneToMany(mappedBy = "subsections",cascade = CascadeType.ALL)
+    private List<Tables> tables;
     @ManyToOne
     @JoinColumn(name = "sections_id")
     @JsonIgnore
     private Sections sections;
-
-    @Override
-    public String toString() {
-        return "Subsections{" +
-                "id=" + id +
-                ", number=" + number +
-                ", heading='" + heading + '\'' +
-                ", text='" + text + '\'' +
-                ", tables=" + tables +
-                ", sections=" + sections +
-                '}';
-    }
 }

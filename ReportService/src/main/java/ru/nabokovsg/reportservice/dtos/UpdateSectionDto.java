@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.reportservice.models.Drawing;
 import ru.nabokovsg.reportservice.models.Subsections;
+import ru.nabokovsg.reportservice.models.Tables;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

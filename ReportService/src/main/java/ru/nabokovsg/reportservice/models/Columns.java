@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Setter
@@ -30,4 +29,14 @@ public class Columns {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "combined_columns_id", referencedColumnName = "id")
     private CombinedColumns combinedColumns;
+
+    @Override
+    public String toString() {
+        return "Columns{" +
+                "id=" + id +
+                ", number=" + number +
+                ", name='" + name + '\'' +
+                ", combinedColumns=" + combinedColumns +
+                '}';
+    }
 }

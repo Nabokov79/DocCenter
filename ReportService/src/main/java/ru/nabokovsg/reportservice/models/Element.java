@@ -1,12 +1,13 @@
 package ru.nabokovsg.reportservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Setter
 @Getter
@@ -27,9 +28,13 @@ public class Element {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "element", fetch = FetchType.LAZY)
-    private Set<Defect> defects;
+    private List<Defect> defects;
     @Column(name = "is_no_defect")
     private String noDefect;
     @OneToMany(mappedBy = "element", fetch = FetchType.LAZY)
-    private Set<SubElement> subElements;
+    private List<SubElement> subElements;
+    @ManyToOne
+    @JoinColumn(name = "table_id")
+    @JsonIgnore
+    private Tables table;
 }

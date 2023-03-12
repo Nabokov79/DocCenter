@@ -24,5 +24,5 @@ public class SubElement {
     @ManyToOne
     @JoinColumn(name = "element_id")
     @JsonIgnore
-    private Element elements;
+    private Element element;
 }
