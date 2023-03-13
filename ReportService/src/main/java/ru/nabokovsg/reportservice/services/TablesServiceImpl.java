@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.reportservice.models.Columns;
 import ru.nabokovsg.reportservice.models.Tables;
-import ru.nabokovsg.reportservice.repositoryes.ColumnsRepository;
 import ru.nabokovsg.reportservice.repositoryes.TablesRepository;
-
 import java.util.List;
 
 @Service
@@ -17,21 +15,16 @@ public class TablesServiceImpl implements TablesService {
 
     private final TablesRepository repository;
     private final ColumnsService columnsService;
-    private final ColumnsRepository columnsRepository;
+    private final SubTableService subTableService;
 
     @Override
-    public void save(List<Tables> tables) {
-        log.info("Tables = " + tables);
-        for (Tables table : tables) {
-            log.info("Before table columns = " + table.getColumns());
-            saveColumns(table.getColumns());
-            Tables tableDb = repository.save(table);
-            tableDb.setColumns(table.getColumns());
+    public Tables save(Tables table) {
+        Tables tableDb = repository.save(table);
+        List<Columns> columns = table.getColumns().stream().toList();
+        if (table.getSubTables() != null) {
+            subTableService.save(tableDb, table.getSubTables());
         }
-    }
-
-    public void saveColumns(List<Columns> columns) {
-        log.info("Table columns = " + columns);
-        columnsRepository.saveAll(columns);
+        columnsService.save(tableDb, columns);
+        return table;
     }
 }

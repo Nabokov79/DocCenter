@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ColumnsService {
 
-    List<Columns> save(List<Columns> columns);
+    List<Columns> save(Tables table, List<Columns> columns);
 }

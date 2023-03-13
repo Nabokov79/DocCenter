@@ -19,13 +19,11 @@ public class ColumnsServiceImpl implements ColumnsService {
     private final CombinedColumnsService combinedColumnsService;
 
     @Override
-    public List<Columns> save(List<Columns> columns) {
+    public List<Columns> save(Tables table, List<Columns> columns) {
         log.info("Columns = " + columns);
         for (Columns column : columns) {
             validate(column);
-            if (column.getCombinedColumns() != null) {
-                column.setCombinedColumns(combinedColumnsService.save(column.getCombinedColumns()));
-            }
+            column.setTable(table);
         }
         return repository.saveAll(columns);
     }
