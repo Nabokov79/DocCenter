@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,16 +26,16 @@ public class Tables {
     private String name;
     @Column(name = "text")
     private String text;
-    @OneToMany(mappedBy = "table")
-    private List<Columns> columns;
+    @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
+    private Set<Columns> columns = new HashSet<>();
     @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     private List<SubTable> subTables;
     @OneToMany(mappedBy = "table", fetch = FetchType.LAZY)
     private List<Element> elements;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "subsections_id",  nullable = false)
+    @JoinColumn(name = "protocol_id",  nullable = false)
     @JsonIgnore
-    private Subsections subsections;
+    private Protocol protocol;
 
     @Override
     public String toString() {
@@ -45,7 +46,6 @@ public class Tables {
                 ", columns=" + columns +
                 ", subTables=" + subTables +
                 ", elements=" + elements +
-                ", subsections=" + subsections +
                 '}';
     }
 }

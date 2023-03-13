@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.reportservice.models.Drawing;
+import ru.nabokovsg.reportservice.models.Protocol;
 import ru.nabokovsg.reportservice.models.Subsections;
-import ru.nabokovsg.reportservice.models.Tables;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,6 +30,8 @@ public class UpdateSectionDto {
     @Schema(description = "Заголовок раздела")
     @NotBlank(message = "heading should not be blank")
     private String heading;
+    @Schema(description = "Список протоколов")
+    private List<Protocol> protocols;
     @Schema(description = "Список подразделов")
     @NotEmpty(message = "subsections should not be blank")
     private List<Subsections> subsections;

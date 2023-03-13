@@ -24,6 +24,8 @@ public class Sections {
     @Column(name = "heading")
     private String heading;
     @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
+    private Set<Protocol> protocols;
+    @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
     private Set<Subsections> subsections;
     @OneToMany(mappedBy = "sections", fetch = FetchType.LAZY)
     private Set<Drawing> drawings;

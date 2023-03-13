@@ -25,16 +25,9 @@ public class Subsections {
     private String heading;
     @Column(name = "text")
     private String text;
-    @Column(name = "paragraph")
-    private String paragraph;
-    @Column(name = "place")
-    private String place;
-    @Column(name = "deviation_size")
-    private String deviationSize;
-    @Column(name = "conclusion")
-    private String conclusion;
-    @OneToMany(mappedBy = "subsections",cascade = CascadeType.ALL)
-    private List<Tables> tables;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "table_id", referencedColumnName = "id")
+    private Tables table;
     @ManyToOne
     @JoinColumn(name = "sections_id")
     @JsonIgnore

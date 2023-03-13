@@ -22,7 +22,7 @@ public class Columns {
     private Integer number;
     @Column(name = "name")
     private String name;
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "table_id")
     @JsonIgnore
     private Tables table;

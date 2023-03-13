@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.nabokovsg.reportservice.models.Drawing;
+import ru.nabokovsg.reportservice.models.Protocol;
 import ru.nabokovsg.reportservice.models.Subsections;
 import ru.nabokovsg.reportservice.models.Tables;
 
@@ -28,6 +29,8 @@ public class NewSectionDto {
     @Schema(description = "Заголовок раздела")
     @NotBlank(message = "heading should not be blank")
     private String heading;
+    @Schema(description = "Список протоколов")
+    private List<Protocol> protocols;
     @Schema(description = "Список подразделов")
     private List<Subsections> subsections;
     @Schema(description = "Список чертежей")

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.nabokovsg.reportservice.models.Drawing;
+import ru.nabokovsg.reportservice.models.Protocol;
 import ru.nabokovsg.reportservice.models.Subsections;
 import ru.nabokovsg.reportservice.models.Tables;
 
@@ -21,6 +22,7 @@ public class SectionDto {
     private long id;
     private Integer number;
     private String heading;
+    private List<Protocol> protocols;
     private List<Subsections> subsections;
     private List<Drawing> drawings;
 }
