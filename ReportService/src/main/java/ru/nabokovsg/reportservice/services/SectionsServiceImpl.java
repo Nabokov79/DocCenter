@@ -37,18 +37,7 @@ public class SectionsServiceImpl implements SectionsService {
         }
         Sections section = mapper.mapToSections(sectionDto);
         section.setReportPattern(pattern);
-        Sections sectionDb = repository.save(section);
-        if (sectionDto.getSubsections() != null) {
-            subsectionsService.save(sectionDb, sectionDto.getSubsections());
-        }
-        if (sectionDto.getProtocols() != null) {
-            for (Protocol protocol : sectionDto.getProtocols()) {
-                protocol.setSections(sectionDb);
-            }
-            protocolService.save(sectionDto.getProtocols());
-        }
-        drawingSectionService.save(sectionDb, sectionDto.getDrawings());
-        return mapper.mapToSectionsDto(section);
+        return saveObjectsSection(repository.save(section), mapper.mapToSectionsDto(section));
     }
 
     @Override
@@ -59,10 +48,7 @@ public class SectionsServiceImpl implements SectionsService {
         }
         Sections section = mapper.maoToUpdateSections(sectionDto);
         section.setReportPattern(getReportPattern(sectionDto.getReportPatternId()));
-        Sections sectionDb = repository.save(section);
-        subsectionsService.save(sectionDb, sectionDto.getSubsections());
-        drawingSectionService.save(sectionDb, sectionDto.getDrawings());
-        return mapper.mapToSectionsDto(section);
+        return saveObjectsSection(repository.save(section), mapper.mapToSectionsDto(section));
     }
 
     @Override
@@ -73,5 +59,19 @@ public class SectionsServiceImpl implements SectionsService {
 
     private ReportPattern getReportPattern(Long id) {
         return reportPatternMapper.toReportPattern(reportPatternService.get(id));
+    }
+
+    private SectionDto saveObjectsSection(Sections section, SectionDto sectionDto) {
+        if (sectionDto.getSubsections() != null) {
+            subsectionsService.save(section, sectionDto.getSubsections());
+        }
+        if (sectionDto.getProtocols() != null) {
+            for (Protocol protocol : sectionDto.getProtocols()) {
+                protocol.setSections(section);
+            }
+            protocolService.save(sectionDto.getProtocols());
+        }
+        drawingSectionService.save(section, sectionDto.getDrawings());
+        return sectionDto;
     }
 }

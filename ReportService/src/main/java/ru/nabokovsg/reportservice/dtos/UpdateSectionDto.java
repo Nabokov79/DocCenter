@@ -36,7 +36,6 @@ public class UpdateSectionDto {
     @NotEmpty(message = "subsections should not be blank")
     private List<Subsections> subsections;
     @Schema(description = "Список чертежей")
-    @NotEmpty(message = "subsections should not be blank")
     private List<Drawing> drawings;
     @Schema(description = "Индентификатор шаблона")
     @NotNull(message = "report pattern id should not be blank")
